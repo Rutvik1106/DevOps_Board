@@ -39,7 +39,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             padding: EdgeInsets.only(right: 20, top: 20),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-               //return page
+                //return page name
               }));
             },
           ),
