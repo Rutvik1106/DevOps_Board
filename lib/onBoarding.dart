@@ -1,0 +1,159 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'helpers/ColorSys.dart';
+import 'helpers/Strings.dart';
+
+class OnBoardingPage extends StatefulWidget {
+  @override
+  _OnBoardingPageState createState() => _OnBoardingPageState();
+}
+
+class _OnBoardingPageState extends State<OnBoardingPage> {
+  PageController _pageController;
+  int currentIndex = 0;
+
+  @override
+  void initState() {
+    _pageController = PageController(
+      initialPage: 0,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        actions: <Widget>[
+          RaisedButton(
+            child: Text("Skip"),
+            textColor: ColorSys.primary,
+            color: Colors.white,
+            padding: EdgeInsets.only(right: 20, top: 20),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+               //return page
+              }));
+            },
+          ),
+        ],
+      ),
+      body: Stack(alignment: Alignment.bottomCenter, children: <Widget>[
+        PageView(
+          onPageChanged: (int page) {
+            setState(() {
+              currentIndex = page;
+            });
+          },
+          controller: _pageController,
+          children: <Widget>[
+            makePage(
+              image: 'assets/images/food2.jpg',
+              title: Strings.stepOneTitle,
+              content: Strings.stepOneContent,
+            ),
+            makePage(
+              reverse: true,
+              image: 'assets/images/food3.jpg',
+              title: Strings.stepTwoTitle,
+              content: Strings.stepTwoContent,
+            ),
+            makePage(
+              image: 'assets/images/food4.jpg',
+              title: Strings.stepThreeTitle,
+              content: Strings.stepThreeContent,
+            ),
+          ],
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 40),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: _buildIndicator(),
+          ),
+        )
+      ]),
+    );
+  }
+
+  Widget makePage({image, title, content, reverse = false}) {
+    return Container(
+      padding: EdgeInsets.only(left: 50, right: 50, bottom: 60),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          !reverse
+              ? Column(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Image.asset(image),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ])
+              : SizedBox(),
+          Text(
+            title,
+            style: TextStyle(
+                color: ColorSys.primary,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            content,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: ColorSys.gray,
+                fontSize: 20,
+                fontWeight: FontWeight.w600),
+          ),
+          reverse
+              ? Column(children: <Widget>[
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Image.asset(image),
+                  ),
+                ])
+              : SizedBox(),
+        ],
+      ),
+    );
+  }
+
+  Widget _indicator(bool isActive) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: 8,
+      width: isActive ? 30 : 8,
+      margin: EdgeInsets.only(right: 5),
+      decoration: BoxDecoration(
+          color: ColorSys.secoundry, borderRadius: BorderRadius.circular(5)),
+    );
+  }
+
+  List<Widget> _buildIndicator() {
+    List<Widget> indicators = [];
+    for (int i = 0; i < 3; i++) {
+      if (currentIndex == i) {
+        indicators.add(_indicator(true));
+      } else {
+        indicators.add(_indicator(false));
+      }
+    }
+    return indicators;
+  }
+}
