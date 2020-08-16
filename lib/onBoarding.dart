@@ -33,7 +33,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         backgroundColor: Colors.white,
         actions: <Widget>[
           RaisedButton(
-            child: Text("Skippppppppp"),
+            child: Text("Skipppp"),
             textColor: ColorSys.primary,
             color: Colors.white,
             padding: EdgeInsets.only(right: 20, top: 20),
