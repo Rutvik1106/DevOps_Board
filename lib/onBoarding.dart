@@ -1,3 +1,4 @@
+import 'package:DevOps_Board/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'helpers/ColorSys.dart';
@@ -39,7 +40,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             padding: EdgeInsets.only(right: 20, top: 20),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //return page message
+                  return Login();
+               
+
               }));
             },
           ),
@@ -55,18 +58,18 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           controller: _pageController,
           children: <Widget>[
             makePage(
-              image: 'assets/images/food2.jpg',
+              image: 'assets/images/Main1.png',
               title: Strings.stepOneTitle,
               content: Strings.stepOneContent,
             ),
             makePage(
               reverse: true,
-              image: 'assets/images/food3.jpg',
+              image: 'assets/images/Main2.jpg',
               title: Strings.stepTwoTitle,
               content: Strings.stepTwoContent,
             ),
             makePage(
-              image: 'assets/images/food4.jpg',
+              image: 'assets/images/Main3.jpg',
               title: Strings.stepThreeTitle,
               content: Strings.stepThreeContent,
             ),
@@ -141,7 +144,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       width: isActive ? 30 : 8,
       margin: EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
-          color: ColorSys.secoundry, borderRadius: BorderRadius.circular(5)),
+          color: ColorSys.kTextLigntColor, borderRadius: BorderRadius.circular(5)),
     );
   }
 
