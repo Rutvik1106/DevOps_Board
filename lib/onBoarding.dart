@@ -1,3 +1,4 @@
+import 'package:DevOps_Board/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'helpers/ColorSys.dart';
@@ -39,7 +40,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             padding: EdgeInsets.only(right: 20, top: 20),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //return page name plz
+                  return Login();
               }));
             },
           ),
