@@ -41,6 +41,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return Login();
+               
+
               }));
             },
           ),
