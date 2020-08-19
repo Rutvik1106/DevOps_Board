@@ -14,6 +14,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: ColorSys.Gray,
       resizeToAvoidBottomPadding: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,6 +28,7 @@ class _LoginState extends State<Login> {
                     'Hello',
                     style: TextStyle(
                       fontSize: 80.0,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -37,6 +39,7 @@ class _LoginState extends State<Login> {
                     'There',
                     style: TextStyle(
                       fontSize: 80.0,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -50,16 +53,20 @@ class _LoginState extends State<Login> {
               children: <Widget>[
                 TextField(
                   decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[500]),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                     labelText: 'EMAIL',
                     labelStyle: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
                       color: ColorSys.gray,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ColorSys.purple,
-                      ),
                     ),
                   ),
                 ),
@@ -68,16 +75,21 @@ class _LoginState extends State<Login> {
                 ),
                 TextField(
                   decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[500]),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                     labelText: 'PASSWORD',
                     labelStyle: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
                       color: ColorSys.gray,
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                      color: ColorSys.purple,
-                    )),
                   ),
                   obscureText: true,
                 ),
@@ -89,7 +101,7 @@ class _LoginState extends State<Login> {
                   child: Material(
                     borderRadius: BorderRadius.circular(35.0),
                     shadowColor: ColorSys.secoundry,
-                    color: ColorSys.purple,
+                    color: Colors.purple[600],
                     elevation: 7.0,
                     child: GestureDetector(
                       onTap: () {
@@ -114,16 +126,16 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 20.0,
                 ),
-                Container(
+                    Container(
                   height: 60.0,
                   color: Colors.transparent,
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: Colors.black,
+                          color: Colors.white,
                           style: BorderStyle.solid,
                           width: 1.0),
-                      color: Colors.transparent,
+                      // color: Colors.transparent,
                       borderRadius: BorderRadius.circular(35.0),
                     ),
                     child: Row(
@@ -139,6 +151,7 @@ class _LoginState extends State<Login> {
                             'Login With Google',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              color: Colors.white,
                               fontFamily: 'Montserrat',
                             ),
                           ),
@@ -159,6 +172,7 @@ class _LoginState extends State<Login> {
               Text(
                 'New To app ?',
                 style: TextStyle(
+                  color: Colors.white,
                   fontFamily: 'Montserrat',
                 ),
               ),
@@ -172,7 +186,7 @@ class _LoginState extends State<Login> {
                 child: Text(
                   'Register',
                   style: TextStyle(
-                    color: ColorSys.purple,
+                    color: Colors.purple[600],
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,

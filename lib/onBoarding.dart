@@ -1,162 +1,74 @@
 import 'package:DevOps_Board/login.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'helpers/ColorSys.dart';
-import 'helpers/Strings.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 
-class OnBoardingPage extends StatefulWidget {
+class OnBoarding extends StatefulWidget {
+  OnBoarding({Key key}) : super(key: key);
+
   @override
-  _OnBoardingPageState createState() => _OnBoardingPageState();
+  _OnBoardingState createState() => _OnBoardingState();
 }
 
-class _OnBoardingPageState extends State<OnBoardingPage> {
-  PageController _pageController;
-  int currentIndex = 0;
+class _OnBoardingState extends State<OnBoarding> {
+  final introKey = GlobalKey<IntroductionScreenState>();
 
-  @override
-  void initState() {
-    _pageController = PageController(
-      initialPage: 0,
+  void _onIntroEnd(context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => Login()),
     );
-    super.initState();
   }
 
   @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        actions: <Widget>[
-          RaisedButton(
-            child: Text("Skipppp"),
-            textColor: ColorSys.primary,
-            color: Colors.white,
-            padding: EdgeInsets.only(right: 20, top: 20),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Login();
-               
+    const bodyStyle = TextStyle(fontSize: 19.0);
+    const pageDecoration = const PageDecoration(
+      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+      bodyTextStyle: bodyStyle,
+      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      pageColor: Colors.white,
+      imagePadding: EdgeInsets.zero,
+    );
 
-              }));
-            },
-          ),
-        ],
-      ),
-      body: Stack(alignment: Alignment.bottomCenter, children: <Widget>[
-        PageView(
-          onPageChanged: (int page) {
-            setState(() {
-              currentIndex = page;
-            });
-          },
-          controller: _pageController,
-          children: <Widget>[
-            makePage(
-              image: 'assets/images/Main1.png',
-              title: Strings.stepOneTitle,
-              content: Strings.stepOneContent,
-            ),
-            makePage(
-              reverse: true,
-              image: 'assets/images/Main2.jpg',
-              title: Strings.stepTwoTitle,
-              content: Strings.stepTwoContent,
-            ),
-            makePage(
-              image: 'assets/images/Main3.jpg',
-              title: Strings.stepThreeTitle,
-              content: Strings.stepThreeContent,
-            ),
-          ],
+    return IntroductionScreen(
+      key: introKey,
+      pages: [
+        PageViewModel(
+          title: "DevOps Board",
+          body: "Helping students to manage their projects",
+          image: Image.asset('assets/images/Main1.png'),
+          decoration: pageDecoration,
         ),
-        Container(
-          margin: EdgeInsets.only(bottom: 40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildIndicator(),
-          ),
-        )
-      ]),
-    );
-  }
-
-  Widget makePage({image, title, content, reverse = false}) {
-    return Container(
-      padding: EdgeInsets.only(left: 50, right: 50, bottom: 60),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          !reverse
-              ? Column(children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Image.asset(image),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                ])
-              : SizedBox(),
-          Text(
-            title,
-            style: TextStyle(
-                color: ColorSys.primary,
-                fontSize: 20,
-                fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            content,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: ColorSys.gray,
-                fontSize: 20,
-                fontWeight: FontWeight.w600),
-          ),
-          reverse
-              ? Column(children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Image.asset(image),
-                  ),
-                ])
-              : SizedBox(),
-        ],
+        PageViewModel(
+          title: "Deadlines",
+          body:
+              "Time is the scarcest resource and unless it is managed nothing else can be managed.",
+          image: Image.asset('assets/images/Main2.jpg'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Project Management",
+          body:
+              "A project is complete when it starts working for you,rather than you working for it",
+          image: Image.asset('assets/images/Main3.jpg'),
+          decoration: pageDecoration,
+        ),
+      ],
+      onDone: () => _onIntroEnd(context),
+      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      showSkipButton: true,
+      skipFlex: 0,
+      nextFlex: 0,
+      skip: const Text('Skip'),
+      next: const Icon(Icons.arrow_forward),
+      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+      dotsDecorator: const DotsDecorator(
+        size: Size(10.0, 10.0),
+        color: Color(0xFFBDBDBD),
+        activeSize: Size(22.0, 10.0),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
       ),
     );
-  }
-
-  Widget _indicator(bool isActive) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      height: 8,
-      width: isActive ? 30 : 8,
-      margin: EdgeInsets.only(right: 5),
-      decoration: BoxDecoration(
-          color: ColorSys.kTextLigntColor, borderRadius: BorderRadius.circular(5)),
-    );
-  }
-
-  List<Widget> _buildIndicator() {
-    List<Widget> indicators = [];
-    for (int i = 0; i < 3; i++) {
-      if (currentIndex == i) {
-        indicators.add(_indicator(true));
-      } else {
-        indicators.add(_indicator(false));
-      }
-    }
-    return indicators;
   }
 }
