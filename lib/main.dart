@@ -1,6 +1,7 @@
+import 'package:DevOps_Board/onBoarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'onBoarding.dart';
+//import 'onBoarding.dart';
 
 
 void main() {
@@ -12,6 +13,6 @@ void main() {
       appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
       visualDensity: VisualDensity.adaptivePlatformDensity,
     ),
-    home: OnBoardingPage(),
+    home: OnBoarding(),
   ));
 }
