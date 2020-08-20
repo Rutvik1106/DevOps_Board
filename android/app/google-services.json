@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1016106513588",
+    "firebase_url": "https://devops-board-b55fb.firebaseio.com",
+    "project_id": "devops-board-b55fb",
+    "storage_bucket": "devops-board-b55fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016106513588:android:3c74f8a9045cd2c97c93e1",
+        "android_client_info": {
+          "package_name": "com.example.DevOps_Board"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016106513588-s08996ggapdc5n8n7jbfuhd2fk5ffh6p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnljdSJB3rJvMBDN16l4ReK0ofyTVOtR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016106513588-s08996ggapdc5n8n7jbfuhd2fk5ffh6p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
