@@ -8,4 +8,6 @@ class ColorSys {
   static Color kPrimarycolor = Color(0xFF84AB5C);
   static Color kTextColor = Color(0xFF202E2E);
   static Color kTextLigntColor = Color(0xFF7286A5);
+  static Color purple = Color.fromRGBO(125, 60, 152,1);
 }
+
