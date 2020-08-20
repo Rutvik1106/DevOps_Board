@@ -8,6 +8,21 @@ import 'package:provider/provider.dart';
 //import 'onBoarding.dart';
 void main() => runApp(MyApp());
 
+<<<<<<< HEAD
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      //scaffoldBackgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
+      appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+    ),
+    home: OnBoardingPage(),
+  ));
+}
+//gsggdgeggeeegeg;
+=======
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,3 +35,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
+>>>>>>> b1e38b819bcef9a9dfbc47e1303133ce511a1c7b
