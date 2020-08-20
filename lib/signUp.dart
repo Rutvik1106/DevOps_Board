@@ -1,3 +1,4 @@
+import 'package:DevOps_Board/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'helpers/ColorSys.dart';
 
@@ -9,6 +10,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String email,password;
+  AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -39,6 +42,9 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  onChanged: (val) {
+                    email = val;
+                  },
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
@@ -61,6 +67,9 @@ class _SignUpState extends State<SignUp> {
                   height: 20.0,
                 ),
                 TextField(
+                  onChanged: (val) {
+                    password = val;
+                  },
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
@@ -91,7 +100,9 @@ class _SignUpState extends State<SignUp> {
                     color: Colors.purple[600],
                     elevation: 7.0,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        _auth.registerWithEmailAndPassword(email, password);
+                      },
                       child: Center(
                         child: Text(
                           'Sign Up',
