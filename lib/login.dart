@@ -1,5 +1,7 @@
 import 'package:DevOps_Board/dashboard.dart';
+import 'package:DevOps_Board/services/auth.dart';
 import 'package:DevOps_Board/signUp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'helpers/ColorSys.dart';
 
@@ -11,9 +13,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String email,password;
+  AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: ColorSys.Gray,
       resizeToAvoidBottomPadding: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,6 +32,7 @@ class _LoginState extends State<Login> {
                     'Hello',
                     style: TextStyle(
                       fontSize: 80.0,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -37,6 +43,7 @@ class _LoginState extends State<Login> {
                     'There',
                     style: TextStyle(
                       fontSize: 80.0,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -49,17 +56,24 @@ class _LoginState extends State<Login> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  onChanged: (val) {
+                    email = val;
+                  },
                   decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[500]),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                     labelText: 'EMAIL',
                     labelStyle: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
                       color: ColorSys.gray,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ColorSys.purple,
-                      ),
                     ),
                   ),
                 ),
@@ -67,17 +81,25 @@ class _LoginState extends State<Login> {
                   height: 20.0,
                 ),
                 TextField(
+                  onChanged: (val) {
+                    password = val;
+                  },
                   decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[500]),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                     labelText: 'PASSWORD',
                     labelStyle: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
                       color: ColorSys.gray,
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                      color: ColorSys.purple,
-                    )),
                   ),
                   obscureText: true,
                 ),
@@ -89,15 +111,12 @@ class _LoginState extends State<Login> {
                   child: Material(
                     borderRadius: BorderRadius.circular(35.0),
                     shadowColor: ColorSys.secoundry,
-                    color: ColorSys.purple,
+                    color: Colors.purple[600],
                     elevation: 7.0,
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return Dashboard();
-                          },
-                        ));
+                      onTap: () async {
+                        await _auth.signInWithEmailAndPassword(email, password);
+                        Navigator.pop(context);
                       },
                       child: Center(
                         child: Text(
@@ -114,16 +133,16 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 20.0,
                 ),
-                Container(
+                    Container(
                   height: 60.0,
                   color: Colors.transparent,
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: Colors.black,
+                          color: Colors.white,
                           style: BorderStyle.solid,
                           width: 1.0),
-                      color: Colors.transparent,
+                      // color: Colors.transparent,
                       borderRadius: BorderRadius.circular(35.0),
                     ),
                     child: Row(
@@ -139,6 +158,7 @@ class _LoginState extends State<Login> {
                             'Login With Google',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              color: Colors.white,
                               fontFamily: 'Montserrat',
                             ),
                           ),
@@ -159,6 +179,7 @@ class _LoginState extends State<Login> {
               Text(
                 'New To app ?',
                 style: TextStyle(
+                  color: Colors.white,
                   fontFamily: 'Montserrat',
                 ),
               ),
@@ -172,7 +193,7 @@ class _LoginState extends State<Login> {
                 child: Text(
                   'Register',
                   style: TextStyle(
-                    color: ColorSys.purple,
+                    color: Colors.purple[600],
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,
