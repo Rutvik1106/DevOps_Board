@@ -1,5 +1,7 @@
 import 'package:DevOps_Board/dashboard.dart';
+import 'package:DevOps_Board/services/auth.dart';
 import 'package:DevOps_Board/signUp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'helpers/ColorSys.dart';
 
@@ -11,6 +13,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String email,password;
+  AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -52,6 +56,9 @@ class _LoginState extends State<Login> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  onChanged: (val) {
+                    email = val;
+                  },
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
@@ -74,6 +81,9 @@ class _LoginState extends State<Login> {
                   height: 20.0,
                 ),
                 TextField(
+                  onChanged: (val) {
+                    password = val;
+                  },
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
@@ -104,12 +114,9 @@ class _LoginState extends State<Login> {
                     color: Colors.purple[600],
                     elevation: 7.0,
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return Dashboard();
-                          },
-                        ));
+                      onTap: () async {
+                        await _auth.signInWithEmailAndPassword(email, password);
+                        Navigator.pop(context);
                       },
                       child: Center(
                         child: Text(
