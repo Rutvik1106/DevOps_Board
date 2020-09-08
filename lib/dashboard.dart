@@ -1,5 +1,7 @@
 import 'package:DevOps_Board/Dashboard_helpers/calendar_page.dart';
+import 'package:DevOps_Board/Dashboard_helpers/task_list.dart';
 import 'package:DevOps_Board/Widgets/active_project_card.dart';
+import 'package:DevOps_Board/helpers/NavigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'Widgets/task_column.dart';
@@ -28,7 +30,7 @@ class _DashboardState extends State<Dashboard> {
   CircleAvatar calendarIcon() {
     return CircleAvatar(
       radius: 25.0,
-      backgroundColor: Colors.lightBlue[300],
+      backgroundColor: ColorSys.Blue,
       child: Icon(
         Icons.calendar_today,
         size: 20.0,
@@ -41,6 +43,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      //bottomNavigationBar: NavigationBar(),
       backgroundColor: ColorSys.Gray,
       body: SafeArea(
         child: Column(
@@ -51,13 +54,13 @@ class _DashboardState extends State<Dashboard> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Icon(Icons.menu, color: Colors.white, size: 30.0),
-                        //Icon(Icons.search, color: Colors.white, size: 25.0),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: <Widget>[
+                    //     Icon(Icons.menu, color: Colors.white, size: 30.0),
+                    //     //Icon(Icons.search, color: Colors.white, size: 25.0),
+                    //   ],
+                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 0, vertical: 0.0),
@@ -72,7 +75,7 @@ class _DashboardState extends State<Dashboard> {
                             percent: 0.75,
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: Colors.white,
-                            backgroundColor:  Colors.lightBlue[300],
+                            backgroundColor: ColorSys.Blue,
                             center: CircleAvatar(
                               backgroundColor: Colors.white,
                               radius: 35.0,
@@ -122,49 +125,49 @@ class _DashboardState extends State<Dashboard> {
                       padding: EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 10.0),
                       child: Column(
-                        children: <Widget>[
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              subheading('My Tasks'),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CalendarPage()),
-                                  );
-                                },
-                                child: calendarIcon(),
-                              ),
-                            ],
+                          //children: <Widget>[
+                          // Row(
+                          //   crossAxisAlignment: CrossAxisAlignment.center,
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: <Widget>[
+                          //     subheading('My Tasks'),
+                          //     GestureDetector(
+                          //       onTap: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) => CalendarPage()),
+                          //         );
+                          //       },
+                          //       child: calendarIcon(),
+                          //     ),
+                          //   ],
+                          // ),
+                          //   SizedBox(height: 15.0),
+                          //   TaskColumn(
+                          //     icon: Icons.alarm,
+                          //     iconBackgroundColor: ColorSys.Blue,
+                          //     title: 'To Do',
+                          //     subtitle: '5 tasks now. 1 started',
+                          //   ),
+                          //   SizedBox(
+                          //     height: 15.0,
+                          //   ),
+                          //   TaskColumn(
+                          //     icon: Icons.blur_circular,
+                          //     iconBackgroundColor:  ColorSys.Blue,
+                          //     title: 'In Progress',
+                          //     subtitle: '1 tasks now. 1 started',
+                          //   ),
+                          //   SizedBox(height: 15.0),
+                          //   TaskColumn(
+                          //     icon: Icons.check_circle_outline,
+                          //     iconBackgroundColor: ColorSys.Blue,
+                          //     title: 'Done',
+                          //     subtitle: '18 tasks now. 13 started',
+                          //   ),
+                          // ],
                           ),
-                          SizedBox(height: 15.0),
-                          TaskColumn(
-                            icon: Icons.alarm,
-                            iconBackgroundColor: Colors.lightBlue[300],
-                            title: 'To Do',
-                            subtitle: '5 tasks now. 1 started',
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          TaskColumn(
-                            icon: Icons.blur_circular,
-                            iconBackgroundColor:  Colors.lightBlue[300],
-                            title: 'In Progress',
-                            subtitle: '1 tasks now. 1 started',
-                          ),
-                          SizedBox(height: 15.0),
-                          TaskColumn(
-                            icon: Icons.check_circle_outline,
-                            iconBackgroundColor: Colors.lightBlue[300],
-                            title: 'Done',
-                            subtitle: '18 tasks now. 13 started',
-                          ),
-                        ],
-                      ),
                     ),
                     Container(
                       color: Colors.transparent,
@@ -175,39 +178,55 @@ class _DashboardState extends State<Dashboard> {
                         children: <Widget>[
                           subheading('Active Projects'),
                           SizedBox(height: 5.0),
-                          Row(
-                            children: <Widget>[
-                              ActiveProjectsCard(
-                                cardColor: Colors.lightBlue[300],
-                                loadingPercent: 0.25,
-                                title: 'Medical App',
-                                subtitle: '9 hours progress',
-                              ),
-                              SizedBox(width: 20.0),
-                              ActiveProjectsCard(
-                                cardColor: Colors.lightBlue[300],
-                                loadingPercent: 0.6,
-                                title: 'Making History Notes',
-                                subtitle: '20 hours progress',
-                              ),
-                            ],
+                          GestureDetector(
+                            child: Row(
+                              children: <Widget>[
+                                ActiveProjectsCard(
+                                  cardColor: ColorSys.Blue,
+                                  loadingPercent: 0.25,
+                                  title: 'Mad Project',
+                                  subtitle: '9 hours progress',
+                                ),
+                                SizedBox(width: 20.0),
+                                ActiveProjectsCard(
+                                  cardColor: ColorSys.Blue,
+                                  loadingPercent: 0.6,
+                                  title: 'Making History Notes',
+                                  subtitle: '20 hours progress',
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return TaskList();
+                              }));
+                            },
                           ),
-                          Row(
-                            children: <Widget>[
-                              ActiveProjectsCard(
-                                cardColor: Colors.lightBlue[300],
-                                loadingPercent: 0.45,
-                                title: 'Sports App',
-                                subtitle: '5 hours progress',
-                              ),
-                              SizedBox(width: 20.0),
-                              ActiveProjectsCard(
-                                cardColor: Colors.lightBlue[300],
-                                loadingPercent: 0.9,
-                                title: 'Online Flutter Course',
-                                subtitle: '23 hours progress',
-                              ),
-                            ],
+                          GestureDetector(
+                            child: Row(
+                              children: <Widget>[
+                                ActiveProjectsCard(
+                                  cardColor: ColorSys.Blue,
+                                  loadingPercent: 0.45,
+                                  title: 'Sports App',
+                                  subtitle: '5 hours progress',
+                                ),
+                                SizedBox(width: 20.0),
+                                ActiveProjectsCard(
+                                  cardColor: ColorSys.Blue,
+                                  loadingPercent: 0.9,
+                                  title: 'Online Flutter Course',
+                                  subtitle: '23 hours progress',
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return TaskList();
+                              }));
+                            },
                           ),
                         ],
                       ),
