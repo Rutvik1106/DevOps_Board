@@ -155,11 +155,13 @@ class _UserProfileState extends State<UserProfile> {
     return Container(
       height: height,
       width: double.infinity,
-      color: Colors.white,
+      color: ColorSys.Gray,
       child: Center(
         child: Text(
           'Profile',
           style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
               fontFamily: 'Montserrat', fontSize: 25, letterSpacing: 1),
         ),
       ),

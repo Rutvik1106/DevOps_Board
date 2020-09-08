@@ -33,7 +33,7 @@ class _NavigationBarState extends State<NavigationBar> {
           child: screens.elementAt(_selectedIndex),
         ), 
         bottomNavigationBar:Container(  
-          decoration: BoxDecoration(color: Colors.grey[600], boxShadow: [
+          decoration: BoxDecoration(color: ColorSys.Gray, boxShadow: [
             BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
           ]),
           child: SafeArea(
@@ -41,15 +41,16 @@ class _NavigationBarState extends State<NavigationBar> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
               child: GNav(
                   gap: 5,
-                  activeColor: Colors.white,
+                  activeColor: Colors.black,
                   iconSize: 24,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   //duration: Duration(milliseconds: 800),
-                  tabBackgroundColor: Colors.black,
+                  tabBackgroundColor: Colors.white,
                   tabs: [
                     GButton(
                       icon: LineIcons.home,
                       text: 'Dashboard',
+                      iconColor: Colors.white,
                       // onPressed: () {
                       //  setState(() {
                       //    screens.elementAt(_selectedIndex);
@@ -59,10 +60,12 @@ class _NavigationBarState extends State<NavigationBar> {
                     GButton(
                       icon: LineIcons.plus_circle,
                       text: 'Add Project',
+                      iconColor: Colors.white,
                     ),
                     GButton(
                       icon: LineIcons.user,
                       text: 'Profile',
+                      iconColor: Colors.white,
                     ),
                   ],
                   selectedIndex: _selectedIndex,

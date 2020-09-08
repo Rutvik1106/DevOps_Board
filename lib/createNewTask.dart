@@ -1,3 +1,4 @@
+
 import 'package:DevOps_Board/Widgets/back_button.dart';
 import 'package:DevOps_Board/Widgets/my_text_field.dart';
 import 'package:DevOps_Board/Widgets/top_container.dart';
@@ -16,10 +17,13 @@ class _CreateNewTaskState extends State<CreateNewTask> {
     return CircleAvatar(
       radius: 25.0,
       backgroundColor: ColorSys.Gray,
-      child: Icon(
-        Icons.calendar_today,
-        size: 20.0,
-        color: Colors.white,
+      child: GestureDetector(
+        child: Icon(
+          Icons.calendar_today,
+          size: 20.0,
+          color: Colors.white,
+        ),
+        onTap: () {},
       ),
     );
   }
@@ -51,7 +55,7 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       Text(
                         'Create New Project',
                         style: TextStyle(
-                            color: ColorSys.Gray,
+                            color: Colors.white,
                             fontSize: 30.0,
                             fontWeight: FontWeight.w700),
                       ),
@@ -69,11 +73,10 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                         children: <Widget>[
                           Expanded(
                             child: MyTextField(
-                              label: 'Date',
-                              icon: downwardIcon,
+                              label: 'Total Days',
+                              // icon: downwardIcon,
                             ),
                           ),
-                          calendarIcon(),
                         ],
                       )
                     ],
@@ -108,6 +111,7 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       'Create New Project',
                       style: TextStyle(
                           color: Colors.white,
+                           fontFamily: 'Serif typeface',
                           fontWeight: FontWeight.w700,
                           fontSize: 18),
                     ),
