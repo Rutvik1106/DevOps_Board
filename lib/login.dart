@@ -13,7 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String email,password;
+  String email, password;
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -116,7 +116,6 @@ class _LoginState extends State<Login> {
                     child: GestureDetector(
                       onTap: () async {
                         await _auth.signInWithEmailAndPassword(email, password);
-                        Navigator.pop(context);
                       },
                       child: Center(
                         child: Text(
@@ -133,7 +132,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 20.0,
                 ),
-                    Container(
+                Container(
                   height: 60.0,
                   color: Colors.transparent,
                   child: Container(

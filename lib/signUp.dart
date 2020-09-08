@@ -10,7 +10,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String email,password;
+  String email, password;
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -102,6 +102,7 @@ class _SignUpState extends State<SignUp> {
                     child: GestureDetector(
                       onTap: () {
                         _auth.registerWithEmailAndPassword(email, password);
+                        Navigator.pop(context);
                       },
                       child: Center(
                         child: Text(
