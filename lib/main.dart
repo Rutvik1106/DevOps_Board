@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 //import 'onBoarding.dart';
-void main() => runApp(MyApp());
+
+void main() => runApp(MyApp(
+));
 
 <<<<<<< HEAD
 void main() {
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<FirebaseUser>.value(
         value: AuthService().user,
         child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Wrapper(),
       ),
     );
