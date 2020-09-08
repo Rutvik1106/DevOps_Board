@@ -56,6 +56,7 @@ class _LoginState extends State<Login> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     email = val;
                   },
@@ -81,6 +82,7 @@ class _LoginState extends State<Login> {
                   height: 20.0,
                 ),
                 TextField(
+                  style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     password = val;
                   },
@@ -110,12 +112,13 @@ class _LoginState extends State<Login> {
                   height: 60.0,
                   child: Material(
                     borderRadius: BorderRadius.circular(35.0),
-                    shadowColor: ColorSys.secoundry,
+                    // shadowColor: ColorSys.secoundry,
                     color: Colors.purple[600],
-                    elevation: 7.0,
+                    elevation: 0.0,
                     child: GestureDetector(
                       onTap: () async {
                         await _auth.signInWithEmailAndPassword(email, password);
+                        Navigator.pop(context);
                       },
                       child: Center(
                         child: Text(
