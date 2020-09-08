@@ -102,6 +102,7 @@ class _SignUpState extends State<SignUp> {
                     child: GestureDetector(
                       onTap: () {
                         _auth.registerWithEmailAndPassword(email, password);
+                        Navigator.pop(context);
                       },
                       child: Center(
                         child: Text(
