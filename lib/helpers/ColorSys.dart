@@ -19,7 +19,7 @@ class ColorSys {
   static const Color kLightGreen = Color(0xFFD9E6DC);
   static const Color kGreen = Color(0xFF309397);
   static const Color kDarkBlue = Color(0xFF0D253F);
-  static const Color Blue = Color.fromRGBO(12, 12, 12, 1);
-  static const Color Gray = Color.fromRGBO(24, 24, 23, 1);
+  static const Color Blue = Color.fromRGBO(4, 129, 255, 1);
+  static const Color Gray = Color.fromRGBO(8, 8, 8, 1);
 
 }

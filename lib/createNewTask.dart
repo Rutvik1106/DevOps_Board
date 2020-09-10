@@ -1,22 +1,33 @@
+
 import 'package:DevOps_Board/Widgets/back_button.dart';
 import 'package:DevOps_Board/Widgets/my_text_field.dart';
 import 'package:DevOps_Board/Widgets/top_container.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
 import 'package:flutter/material.dart';
 
+class CreateNewTask extends StatefulWidget {
+  CreateNewTask({Key key}) : super(key: key);
 
-class CreateNewTaskPage extends StatelessWidget {
-   static CircleAvatar calendarIcon() {
+  @override
+  _CreateNewTaskState createState() => _CreateNewTaskState();
+}
+
+class _CreateNewTaskState extends State<CreateNewTask> {
+  static CircleAvatar calendarIcon() {
     return CircleAvatar(
       radius: 25.0,
       backgroundColor: ColorSys.Gray,
-      child: Icon(
-        Icons.calendar_today,
-        size: 20.0,
-        color: Colors.white,
+      child: GestureDetector(
+        child: Icon(
+          Icons.calendar_today,
+          size: 20.0,
+          color: Colors.white,
+        ),
+        onTap: () {},
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -42,9 +53,11 @@ class CreateNewTaskPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Create Work Iteam',
+                        'Create New Project',
                         style: TextStyle(
-                            color:ColorSys.Gray,fontSize: 30.0, fontWeight: FontWeight.w700),
+                            color: Colors.white,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -60,11 +73,10 @@ class CreateNewTaskPage extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: MyTextField(
-                              label: 'Date',
-                              icon: downwardIcon,
+                              label: 'Total Days',
+                              // icon: downwardIcon,
                             ),
                           ),
-                          calendarIcon(),
                         ],
                       )
                     ],
@@ -72,29 +84,12 @@ class CreateNewTaskPage extends StatelessWidget {
                 ],
               ),
             ),
-             SizedBox(height: 40),
+            SizedBox(height: 40),
             Expanded(
                 child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                          child: MyTextField(
-                        label: 'Start Time',
-                        icon: downwardIcon,
-                      )),
-                      SizedBox(width: 40),
-                      Expanded(
-                        child: MyTextField(
-                          label: 'End Time',
-                          icon: downwardIcon,
-                        ),
-                      ),
-                    ],
-                  ),
                   SizedBox(height: 20),
                   MyTextField(
                     label: 'Description',
@@ -102,47 +97,6 @@ class CreateNewTaskPage extends StatelessWidget {
                     maxLines: 3,
                   ),
                   SizedBox(height: 30),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Category',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          //direction: Axis.vertical,
-                          alignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          runSpacing: 0,
-                          //textDirection: TextDirection.rtl,
-                          spacing: 20.0,
-                          children: <Widget>[
-                            Chip(
-                              label: Text("Features"),
-
-                              backgroundColor: ColorSys.kRed,
-                              labelStyle: TextStyle(color: Colors.white),
-                            ),
-                            Chip(
-                              label: Text("User Story"),
-                            ),
-                            Chip(
-                              label: Text("Task"),
-                            ),
-                            Chip(
-                              label: Text("Bug"),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             )),
@@ -154,9 +108,10 @@ class CreateNewTaskPage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      'Create Work Iteam',
+                      'Create New Project',
                       style: TextStyle(
                           color: Colors.white,
+                           fontFamily: 'Serif typeface',
                           fontWeight: FontWeight.w700,
                           fontSize: 18),
                     ),
