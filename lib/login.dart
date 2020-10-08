@@ -13,7 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String email,password;
+  String email, password;
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -56,14 +56,11 @@ class _LoginState extends State<Login> {
             child: Column(
               children: <Widget>[
                 TextField(
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     email = val;
                   },
                   decoration: InputDecoration(
-                    
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
@@ -85,9 +82,7 @@ class _LoginState extends State<Login> {
                   height: 20.0,
                 ),
                 TextField(
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     password = val;
                   },
@@ -123,7 +118,7 @@ class _LoginState extends State<Login> {
                     child: GestureDetector(
                       onTap: () async {
                         await _auth.signInWithEmailAndPassword(email, password);
-                       Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                       child: Center(
                         child: Text(
@@ -140,7 +135,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 20.0,
                 ),
-                    Container(
+                Container(
                   height: 60.0,
                   color: Colors.transparent,
                   child: Container(
