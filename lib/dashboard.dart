@@ -16,7 +16,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-
   Text subheading(String title) {
     return Text(
       title,
@@ -43,18 +42,17 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    
 
     return StreamBuilder(
         stream: Firestore.instance.collection('users').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           final user = snapshot.data;
-          if(!snapshot.hasData) {
+          if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasData) {
             for (var doc in user.documents) {
-              print('nnnnaaaaammm' + doc.data['name']+' '+widget.uid);
+              print('nnnnaaaaammm' + doc.data['name'] + ' ' + widget.uid);
               if (doc.data['uid'] == widget.uid) {
                 print('nnnnaaaaammm' + doc.data['name']);
                 return Scaffold(
@@ -139,117 +137,104 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: <Widget>[
-                                // Container(
-                                //   color: Colors.transparent,
-                                //   padding: EdgeInsets.symmetric(
-                                //       horizontal: 20.0, vertical: 10.0),
-                                //   child: Column(
-                                //       //children: <Widget>[
-                                //       // Row(
-                                //       //   crossAxisAlignment: CrossAxisAlignment.center,
-                                //       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //       //   children: <Widget>[
-                                //       //     subheading('My Tasks'),
-                                //       //     GestureDetector(
-                                //       //       onTap: () {
-                                //       //         Navigator.push(
-                                //       //           context,
-                                //       //           MaterialPageRoute(
-                                //       //               builder: (context) => CalendarPage()),
-                                //       //         );
-                                //       //       },
-                                //       //       child: calendarIcon(),
-                                //       //     ),
-                                //       //   ],
-                                //       // ),
-                                //       //   SizedBox(height: 15.0),
-                                //       //   TaskColumn(
-                                //       //     icon: Icons.alarm,
-                                //       //     iconBackgroundColor: ColorSys.Blue,
-                                //       //     title: 'To Do',
-                                //       //     subtitle: '5 tasks now. 1 started',
-                                //       //   ),
-                                //       //   SizedBox(
-                                //       //     height: 15.0,
-                                //       //   ),
-                                //       //   TaskColumn(
-                                //       //     icon: Icons.blur_circular,
-                                //       //     iconBackgroundColor:  ColorSys.Blue,
-                                //       //     title: 'In Progress',
-                                //       //     subtitle: '1 tasks now. 1 started',
-                                //       //   ),
-                                //       //   SizedBox(height: 15.0),
-                                //       //   TaskColumn(
-                                //       //     icon: Icons.check_circle_outline,
-                                //       //     iconBackgroundColor: ColorSys.Blue,
-                                //       //     title: 'Done',
-                                //       //     subtitle: '18 tasks now. 13 started',
-                                //       //   ),
-                                //       // ],
-                                //       ),
-                                // ),
-                                SingleChildScrollView(
+                          child: Column(
+                            children: <Widget>[
+                              SingleChildScrollView(
                                   child: Container(
-                                    height:
-                                        MediaQuery.of(context).size.height *
-                                            2,
-                                    width:
-                                        MediaQuery.of(context).size.width * 2,
-                                    color: Colors.transparent,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 10.0),
-                                    child: StreamBuilder(
-                                        stream: Firestore.instance
-                                            .collection(widget.uid)
-                                            .snapshots(),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          } else {
-                                            return GridView.builder(
-                                                gridDelegate:
-                                                    new SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  childAspectRatio: 0.70,
-                                                  crossAxisSpacing: 35,
-                                                  //mainAxisSpacing: 2
-                                                ),
-                                                itemCount: snapshot
-                                                    .data.documents.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  DocumentSnapshot task =
-                                                      snapshot.data
-                                                          .documents[index];
-                                                  print(task['title'] +
-                                                      ' ' +
-                                                      task.documentID);
-                                                  return ActiveProjectsCard(
-                                                    cardColor: ColorSys.Blue,
-                                                    loadingPercent: 0.25,
-                                                    title: task['title'],
-                                                    subtitle:
-                                                        task['description'],
-                                                  );
-                                                });
-                                          }
-                                        }))),
-                              ],
-                            ),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.60,
+                                      width:
+                                          MediaQuery.of(context).size.width * 2,
+                                      color: Colors.transparent,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 10.0),
+                                      child: StreamBuilder(
+                                          stream: Firestore.instance
+                                              .collection(widget.uid)
+                                              .snapshots(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Center(
+                                                  child:
+                                                      CircularProgressIndicator());
+                                            } else {
+                                              return GridView.builder(
+                                                  gridDelegate:
+                                                      new SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 2,
+                                                    childAspectRatio: 0.70,
+                                                    crossAxisSpacing: 35,
+                                                    //mainAxisSpacing: 2
+                                                  ),
+                                                  itemCount: snapshot
+                                                      .data.documents.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    DocumentSnapshot task =
+                                                        snapshot.data
+                                                            .documents[index];
+                                                    print(task['title'] +
+                                                        ' ' +
+                                                        task.documentID);
+                                                    int days = int.parse(
+                                                        task['totaldays']
+                                                            .toString());
+                                                    if (task['date'] !=
+                                                        DateTime.now()
+                                                            .toString()
+                                                            .substring(0, 10)) {
+                                                      Firestore.instance
+                                                          .collection(
+                                                              widget.uid)
+                                                          .document(
+                                                              task.documentID)
+                                                          .setData({
+                                                        'title': task['title'],
+                                                        'days': task['days'],
+                                                        'description':
+                                                            task['description'],
+                                                        'date': DateTime.now()
+                                                            .toString()
+                                                            .substring(0, 10),
+                                                        'totaldays': days + 1
+                                                      });
+                                                    }
+                                                    double taskcomplated =
+                                                        double.parse(
+                                                            task['totaldays']
+                                                                .toString());
+                                                    double totaldays =
+                                                        double.parse(
+                                                            task['days']
+                                                                .toString());
+                                                    taskcomplated =
+                                                        (taskcomplated /
+                                                            totaldays);
+                                                    if (taskcomplated <= 1) {
+                                                      return ActiveProjectsCard(
+                                                        cardColor:
+                                                            ColorSys.Blue,
+                                                        loadingPercent:
+                                                            taskcomplated,
+                                                        title: task['title'],
+                                                        subtitle:
+                                                            task['description'],
+                                                      );
+                                                    }
+                                                  });
+                                            }
+                                          }))),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
                 );
-              } 
+              }
             }
           }
         });

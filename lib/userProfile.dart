@@ -24,6 +24,7 @@ class _UserProfileState extends State<UserProfile> {
             return Center(child: CircularProgressIndicator());
           } else {
             for (var doc in user.documents) {
+              print(doc.documentID);
               if (doc.data['uid'] == widget.uid) {
                 return Scaffold(
                   backgroundColor: ColorSys.Gray,

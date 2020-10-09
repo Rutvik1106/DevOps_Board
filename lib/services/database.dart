@@ -15,11 +15,14 @@ class DatabaseService {
   //task collection ref
 
   Future updateTask(String title, String days, String description) async {
+    String startingdate = DateTime.now().toString().substring(0,10);
     CollectionReference taskCollection = Firestore.instance.collection(uid);
     return await taskCollection.add({
       'title':title,
       'days':days,
-      'description':description
+      'description':description,
+      'date': startingdate,
+      'totaldays': 0
     });
   }
   
