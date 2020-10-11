@@ -2,11 +2,13 @@ import 'package:DevOps_Board/Widgets/back_button.dart';
 import 'package:DevOps_Board/Widgets/my_text_field.dart';
 import 'package:DevOps_Board/Widgets/top_container.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
+import 'package:DevOps_Board/services/database.dart';
 import 'package:flutter/material.dart';
 
-
 class CreateNewTaskPage extends StatelessWidget {
-   static CircleAvatar calendarIcon() {
+  String uid, title, start, end, description;
+  CreateNewTaskPage({this.uid});
+  static CircleAvatar calendarIcon() {
     return CircleAvatar(
       radius: 25.0,
       backgroundColor: ColorSys.Gray,
@@ -17,6 +19,7 @@ class CreateNewTaskPage extends StatelessWidget {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -44,7 +47,9 @@ class CreateNewTaskPage extends StatelessWidget {
                       Text(
                         'Create Work Iteam',
                         style: TextStyle(
-                            color:ColorSys.Gray,fontSize: 30.0, fontWeight: FontWeight.w700),
+                            color: ColorSys.Gray,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -53,26 +58,30 @@ class CreateNewTaskPage extends StatelessWidget {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      MyTextField(label: 'Title'),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Expanded(
-                            child: MyTextField(
-                              label: 'Date',
-                              icon: downwardIcon,
+                      TextField(
+                          onChanged: (val) {
+                            title = val;
+                          },
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            labelText: 'Title',
+                            labelStyle: TextStyle(color: Colors.black),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
                             ),
-                          ),
-                          calendarIcon(),
-                        ],
-                      )
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          )),
                     ],
                   ))
                 ],
               ),
             ),
-             SizedBox(height: 40),
+            SizedBox(height: 40),
             Expanded(
                 child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -82,25 +91,68 @@ class CreateNewTaskPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
-                          child: MyTextField(
-                        label: 'Start Time',
-                        icon: downwardIcon,
-                      )),
+                          child: TextField(
+                              style: TextStyle(color: Colors.white),
+                              onChanged: (val) {
+                                start = val;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Start Time',
+                                labelStyle: TextStyle(color: Colors.white),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                              ))),
                       SizedBox(width: 40),
                       Expanded(
-                        child: MyTextField(
-                          label: 'End Time',
-                          icon: downwardIcon,
-                        ),
+                        child: TextField(
+                            onChanged: (val) {
+                              end = val;
+                            },
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              labelText: "End Time",
+                              labelStyle: TextStyle(color: Colors.white),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            )),
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
-                  MyTextField(
-                    label: 'Description',
-                    minLines: 1,
-                    maxLines: 3,
-                  ),
+                  TextField(
+                      onChanged: (val) {
+                        description = val;
+                      },
+                      style: TextStyle(color: Colors.white),
+                      minLines: 1,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        labelText: "Description",
+                        labelStyle: TextStyle(color: Colors.white),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      )),
                   SizedBox(height: 30),
                   Container(
                     alignment: Alignment.topLeft,
@@ -125,7 +177,6 @@ class CreateNewTaskPage extends StatelessWidget {
                           children: <Widget>[
                             Chip(
                               label: Text("Features"),
-
                               backgroundColor: ColorSys.kRed,
                               labelStyle: TextStyle(color: Colors.white),
                             ),
@@ -152,20 +203,28 @@ class CreateNewTaskPage extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(
-                    child: Text(
-                      'Create Work Iteam',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18),
-                    ),
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
-                    width: width - 40,
-                    decoration: BoxDecoration(
-                      color: ColorSys.Blue,
-                      borderRadius: BorderRadius.circular(30),
+                  GestureDetector(
+                    onTap: () async {
+                      print('tapped');
+                      await DatabaseService(uid: uid)
+                          .updateTodo(title, start, end, description);
+                      print('sucess');
+                    },
+                    child: Container(
+                      child: Text(
+                        'Create Work Iteam',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18),
+                      ),
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                      width: width - 40,
+                      decoration: BoxDecoration(
+                        color: ColorSys.Blue,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                   ),
                 ],

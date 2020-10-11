@@ -1,8 +1,10 @@
+import 'package:DevOps_Board/Dashboard_helpers/task_list.dart';
 import 'package:DevOps_Board/Widgets/active_project_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Widgets/top_container.dart';
 import 'helpers/ColorSys.dart';
 
@@ -16,6 +18,50 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  int totaltask, complete, remain;
+  double per;
+  @override
+  void initState() {
+    getdata();
+  }
+
+  updatecomplete() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      complete++;
+      per = complete / totaltask;
+      pref.setInt('complete', complete);
+      print("complete::: $complete perrrrr $per");
+    });
+  }
+
+  getdata() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      totaltask = pref.getInt('totaltask');
+      complete = pref.getInt('complete');
+      remain = pref.getInt('remain');
+      if (totaltask == null) {
+        totaltask = 0;
+        pref.setInt('totaltask', 0);
+      }
+      if (complete == null) {
+        complete = 0;
+        print("complete::: $complete");
+        pref.setInt('complete', 0);
+      }
+      if (remain == null) {
+        remain = 0;
+        pref.setInt('remain', 0);
+      }
+      if (totaltask == 0) {
+        per = 0;
+      } else {
+        per = complete / totaltask;
+      }
+    });
+  }
+
   Text subheading(String title) {
     return Text(
       title,
@@ -52,7 +98,11 @@ class _DashboardState extends State<Dashboard> {
           }
           if (snapshot.hasData) {
             for (var doc in user.documents) {
-              print('nnnnaaaaammm' + doc.data['name'] + ' ' + widget.uid);
+              print('nnnnaaaaammm' +
+                  doc.data['name'] +
+                  ' ' +
+                  widget.uid +
+                  ' totaltask $totaltask  complete $complete');
               if (doc.data['uid'] == widget.uid) {
                 print('nnnnaaaaammm' + doc.data['name']);
                 return Scaffold(
@@ -87,11 +137,11 @@ class _DashboardState extends State<Dashboard> {
                                         radius: 90.0,
                                         lineWidth: 5.0,
                                         animation: true,
-                                        percent: 0.75,
+                                        percent: per,
                                         circularStrokeCap:
                                             CircularStrokeCap.round,
-                                        progressColor: Colors.white,
-                                        backgroundColor: ColorSys.Blue,
+                                        progressColor: Colors.black,
+                                        backgroundColor: Colors.white,
                                         center: CircleAvatar(
                                           backgroundColor: Colors.white,
                                           radius: 35.0,
@@ -111,7 +161,7 @@ class _DashboardState extends State<Dashboard> {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 22.0,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.w800,
                                               ),
                                             ),
@@ -123,7 +173,7 @@ class _DashboardState extends State<Dashboard> {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 16.0,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.w400,
                                               ),
                                             ),
@@ -179,6 +229,8 @@ class _DashboardState extends State<Dashboard> {
                                                     print(task['title'] +
                                                         ' ' +
                                                         task.documentID);
+                                                    String setstate =
+                                                        task['setstate'];
                                                     int days = int.parse(
                                                         task['totaldays']
                                                             .toString());
@@ -199,7 +251,8 @@ class _DashboardState extends State<Dashboard> {
                                                         'date': DateTime.now()
                                                             .toString()
                                                             .substring(0, 10),
-                                                        'totaldays': days + 1
+                                                        'totaldays': days + 1,
+                                                        'setstate': setstate
                                                       });
                                                     }
                                                     double taskcomplated =
@@ -213,17 +266,53 @@ class _DashboardState extends State<Dashboard> {
                                                     taskcomplated =
                                                         (taskcomplated /
                                                             totaldays);
-                                                    if (taskcomplated <= 1) {
-                                                      return ActiveProjectsCard(
-                                                        cardColor:
-                                                            ColorSys.Blue,
-                                                        loadingPercent:
-                                                            taskcomplated,
-                                                        title: task['title'],
-                                                        subtitle:
-                                                            task['description'],
-                                                      );
+                                                    if (taskcomplated >= 1) {
+                                                      taskcomplated = 1;
+                                                      if (task['setstate'] ==
+                                                          'yes') {
+                                                        Firestore.instance
+                                                            .collection(
+                                                                widget.uid)
+                                                            .document(
+                                                                task.documentID)
+                                                            .setData({
+                                                          'title':
+                                                              task['title'],
+                                                          'days': task['days'],
+                                                          'description': task[
+                                                              'description'],
+                                                          'date': DateTime.now()
+                                                              .toString()
+                                                              .substring(0, 10),
+                                                          'totaldays': days,
+                                                          'setstate': 'No'
+                                                        });
+                                                        updatecomplete();
+                                                      }
                                                     }
+                                                    return Container(
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      TaskList(
+                                                                          uid: widget
+                                                                              .uid)));
+                                                        },
+                                                        child:
+                                                            ActiveProjectsCard(
+                                                          cardColor:
+                                                              Colors.grey[850],
+                                                          loadingPercent:
+                                                              taskcomplated,
+                                                          title: task['title'],
+                                                          subtitle: task[
+                                                              'description'],
+                                                        ),
+                                                      ),
+                                                    );
                                                   });
                                             }
                                           }))),

@@ -9,6 +9,7 @@ class AuthService {
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      // ignore: deprecated_member_use
       FirebaseUser user = result.user;
       return user;
     } catch(e) {

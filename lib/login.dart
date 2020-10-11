@@ -108,18 +108,18 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 50.0,
                 ),
-                Container(
-                  height: 60.0,
-                  child: Material(
-                    borderRadius: BorderRadius.circular(35.0),
-                    // shadowColor: ColorSys.secoundry,
-                    color: Colors.purple[600],
-                    elevation: 0.0,
-                    child: GestureDetector(
-                      onTap: () async {
-                        await _auth.signInWithEmailAndPassword(email, password);
-                        Navigator.pop(context);
-                      },
+                GestureDetector(
+                  onTap: () async {
+                    await _auth.signInWithEmailAndPassword(email, password);
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 60.0,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(35.0),
+                      // shadowColor: ColorSys.secoundry,
+                      color: Colors.purple[600],
+                      elevation: 0.0,
                       child: Center(
                         child: Text(
                           'LOGIN',

@@ -15,15 +15,28 @@ class DatabaseService {
   //task collection ref
 
   Future updateTask(String title, String days, String description) async {
-    String startingdate = DateTime.now().toString().substring(0,10);
+    String startingdate = DateTime.now().toString().substring(0, 10);
     CollectionReference taskCollection = Firestore.instance.collection(uid);
     return await taskCollection.add({
-      'title':title,
-      'days':days,
-      'description':description,
+      'title': title,
+      'days': days,
+      'description': description,
       'date': startingdate,
-      'totaldays': 0
+      'totaldays': 0,
+      'setstate': 'yes'
     });
   }
-  
+
+  Future updateTodo(
+      String title, String start, String end, String description) async {
+    CollectionReference taskCollection =
+        Firestore.instance.collection(uid).document('todo').collection('list');
+    return await taskCollection.add({
+      'title': title,
+      'start': start,
+      'end': end,
+      'description': description,
+      'show': 'no'
+    });
+  }
 }
