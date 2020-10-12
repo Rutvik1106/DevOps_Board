@@ -284,7 +284,7 @@ class _DashboardState extends State<Dashboard> {
                                                           'date': DateTime.now()
                                                               .toString()
                                                               .substring(0, 10),
-                                                          'totaldays': days,
+                                                          'totaldays': days + 1,
                                                           'setstate': 'No'
                                                         });
                                                         updatecomplete();
@@ -296,10 +296,13 @@ class _DashboardState extends State<Dashboard> {
                                                           Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      TaskList(
-                                                                          uid: widget
-                                                                              .uid)));
+                                                                  builder:
+                                                                      (context) =>
+                                                                          TaskList(
+                                                                            uid:
+                                                                                widget.uid,
+                                                                            id: task.documentID,
+                                                                          )));
                                                         },
                                                         child:
                                                             ActiveProjectsCard(

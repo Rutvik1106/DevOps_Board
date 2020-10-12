@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
-  String uid;
-  DatabaseService({this.uid});
+  String uid, id;
+  DatabaseService({this.uid, this.id});
   //user collection ref
   CollectionReference userCollection = Firestore.instance.collection('users');
 
@@ -30,13 +30,14 @@ class DatabaseService {
   Future updateTodo(
       String title, String start, String end, String description) async {
     CollectionReference taskCollection =
-        Firestore.instance.collection(uid).document('todo').collection('list');
+        Firestore.instance.collection(uid).document(id).collection('list');
     return await taskCollection.add({
       'title': title,
       'start': start,
       'end': end,
       'description': description,
-      'show': 'no'
+      'show': 'no',
+      'done' : 'no'
     });
   }
 }

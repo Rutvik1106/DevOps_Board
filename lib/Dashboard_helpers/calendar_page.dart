@@ -1,15 +1,10 @@
-import 'package:DevOps_Board/Dashboard_helpers/dates_list.dart';
-import 'package:DevOps_Board/Widgets/back_button.dart';
-import 'package:DevOps_Board/Widgets/calendar_dates.dart';
-import 'package:DevOps_Board/Widgets/task_container.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'create_new_task_page.dart';
 
 class CalendarPage extends StatelessWidget {
-  String uid;
-  CalendarPage({this.uid});
+  String uid, id;
+  CalendarPage({this.uid, this.id});
   Widget _dashedText() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -36,7 +31,7 @@ class CalendarPage extends StatelessWidget {
         child: StreamBuilder(
             stream: Firestore.instance
                 .collection(uid)
-                .document('todo')
+                .document(id)
                 .collection('list')
                 .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -55,37 +50,46 @@ class CalendarPage extends StatelessWidget {
                             DateTime.now().toString().substring(0, 10)) {
                       if (task['start'] ==
                           DateTime.now().toString().substring(0, 10)) {
+                        print('object');
                         CollectionReference taskCollection = Firestore.instance
                             .collection(uid)
-                            .document('todo')
+                            .document(id)
                             .collection('list');
                         taskCollection.document(task.documentID).setData({
                           'title': task['title'],
                           'start': task['start'],
                           'end': task['end'],
                           'description': task['description'],
-                          'show': 'yes'
+                          'show': 'yes',
+                          'done': 'no'
                         });
                       }
                       if (task['end'] ==
                           DateTime.now().toString().substring(0, 10)) {
                         CollectionReference taskCollection = Firestore.instance
                             .collection(uid)
-                            .document('todo')
+                            .document(id)
                             .collection('list');
                         taskCollection.document(task.documentID).setData({
                           'title': task['title'],
                           'start': task['start'],
                           'end': task['end'],
                           'description': task['description'],
-                          'show': 'no'
+                          'show': 'no',
+                          'done': 'yes'
                         });
                       }
                       return Card(
+                        color: Colors.grey[850],
                         child: ListTile(
-                          leading: FlutterLogo(),
-                          title: Text(task['title']),
-                          subtitle: Text(task['description']),
+                          title: Text(
+                            task['title'],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          subtitle: Text(
+                            task['description'],
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       );
                     }

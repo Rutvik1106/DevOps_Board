@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 class TaskList extends StatefulWidget {
   //TaskList({Key key}) : super(key: key);
   String uid;
-  TaskList({this.uid});
+  String id;
+  TaskList({this.uid, this.id});
   @override
   _TaskListState createState() => _TaskListState();
 }
@@ -48,77 +49,112 @@ class _TaskListState extends State<TaskList> {
       ),
       // bottomNavigationBar: NavigationBar(),
       backgroundColor: ColorSys.Gray,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-        child: Column(
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                subheading('My Tasks'),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CalendarPage(uid: widget.uid)),
-                    );
-                  },
-                  child: calendarIcon(),
+      body: StreamBuilder(
+          stream: Firestore.instance
+              .collection(widget.uid)
+              .document(widget.id)
+              .collection('list')
+              .snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              int total = snapshot.data.documents.length;
+              int run, done;
+              run = 0;
+              done = 0;
+              for (var doc in snapshot.data.documents) {
+                if (doc['done'] == 'yes') {
+                  done++;
+                }
+                if (doc['show'] == 'yes') {
+                  run++;
+                }
+              }
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        subheading('My Tasks'),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CalendarPage(
+                                        uid: widget.uid,
+                                        id: widget.id,
+                                      )),
+                            );
+                          },
+                          child: calendarIcon(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15.0),
+                    TaskColumn(
+                      icon: Icons.alarm,
+                      iconBackgroundColor: ColorSys.Blue,
+                      title: 'To Do',
+                      subtitle: '$total tasks now',
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    TaskColumn(
+                      icon: Icons.blur_circular,
+                      iconBackgroundColor: ColorSys.Blue,
+                      title: 'In Progress',
+                      subtitle: '$run tasks started',
+                    ),
+                    SizedBox(height: 15.0),
+                    TaskColumn(
+                      icon: Icons.check_circle_outline,
+                      iconBackgroundColor: ColorSys.Blue,
+                      title: 'Done',
+                      subtitle: '$done task finished',
+                    ),
+                    SizedBox(height: 15.0),
+                    RaisedButton(
+                      color: ColorSys.Blue,
+                      child: Text(
+                        'view',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Todo(uid: widget.uid, id: widget.id)),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 15.0),
+                    RaisedButton(
+                      color: ColorSys.Blue,
+                      child: Text(
+                        'add',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreateNewTaskPage(
+                                  uid: widget.uid, id: widget.id)),
+                        );
+                      },
+                    )
+                  ],
                 ),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            TaskColumn(
-              icon: Icons.alarm,
-              iconBackgroundColor: ColorSys.Blue,
-              title: 'To Do',
-              subtitle: '5 tasks now. 1 started',
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            TaskColumn(
-              icon: Icons.blur_circular,
-              iconBackgroundColor: ColorSys.Blue,
-              title: 'In Progress',
-              subtitle: '1 tasks now. 1 started',
-            ),
-            SizedBox(height: 15.0),
-            TaskColumn(
-              icon: Icons.check_circle_outline,
-              iconBackgroundColor: ColorSys.Blue,
-              title: 'Done',
-              subtitle: '18 tasks now. 13 started',
-            ),
-            SizedBox(height: 15.0),
-            RaisedButton(
-              child: Text('view'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Todo(uid: widget.uid)),
-                );
-              },
-            ),
-            SizedBox(height: 15.0),
-            RaisedButton(
-              child: Text('add'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreateNewTaskPage(
-                            uid: widget.uid,
-                          )),
-                );
-              },
-            )
-          ],
-        ),
-      ),
+              );
+            }
+          }),
     );
   }
 }

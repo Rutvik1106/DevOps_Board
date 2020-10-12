@@ -6,8 +6,8 @@ import 'package:DevOps_Board/services/database.dart';
 import 'package:flutter/material.dart';
 
 class CreateNewTaskPage extends StatelessWidget {
-  String uid, title, start, end, description;
-  CreateNewTaskPage({this.uid});
+  String uid, title, start, end, description,id;
+  CreateNewTaskPage({this.uid,this.id});
   static CircleAvatar calendarIcon() {
     return CircleAvatar(
       radius: 25.0,
@@ -206,7 +206,7 @@ class CreateNewTaskPage extends StatelessWidget {
                   GestureDetector(
                     onTap: () async {
                       print('tapped');
-                      await DatabaseService(uid: uid)
+                      await DatabaseService(uid: uid,id:id)
                           .updateTodo(title, start, end, description);
                       print('sucess');
                     },
