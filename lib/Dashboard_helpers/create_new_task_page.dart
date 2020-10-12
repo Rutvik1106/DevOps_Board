@@ -1,13 +1,12 @@
 import 'package:DevOps_Board/Widgets/back_button.dart';
-import 'package:DevOps_Board/Widgets/my_text_field.dart';
 import 'package:DevOps_Board/Widgets/top_container.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
 import 'package:DevOps_Board/services/database.dart';
 import 'package:flutter/material.dart';
 
-class CreateNewTaskPage extends StatelessWidget {
-  String uid, title, start, end, description,id;
-  CreateNewTaskPage({this.uid,this.id});
+class CreateNewTaskPage extends StatefulWidget {
+  String uid, id;
+  CreateNewTaskPage({this.uid, this.id});
   static CircleAvatar calendarIcon() {
     return CircleAvatar(
       radius: 25.0,
@@ -18,6 +17,20 @@ class CreateNewTaskPage extends StatelessWidget {
         color: Colors.white,
       ),
     );
+  }
+
+  @override
+  _CreateNewTaskPageState createState() => _CreateNewTaskPageState();
+}
+
+class _CreateNewTaskPageState extends State<CreateNewTaskPage> {
+  String title, description;
+  DateTime start, end;
+
+  @override
+  void initState() {
+    super.initState();
+    end = start = DateTime.now();
   }
 
   @override
@@ -91,49 +104,58 @@ class CreateNewTaskPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
-                          child: TextField(
-                              style: TextStyle(color: Colors.white),
-                              onChanged: (val) {
-                                start = val;
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Start Time',
-                                labelStyle: TextStyle(color: Colors.white),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                              ))),
+                          child: ListTile(
+                        title: Text(
+                          "start ${start.year}-${start.month}-${start.day}",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        trailing: Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white,
+                        ),
+                        onTap: () async {
+                          DateTime time = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2050));
+                          if (time != null) {
+                            setState(() {
+                              start = time;
+                            });
+                          }
+                        },
+                      )),
                       SizedBox(width: 40),
                       Expanded(
-                        child: TextField(
-                            onChanged: (val) {
-                              end = val;
-                            },
+                        child: ListTile(
+                          title: Text(
+                            "end ${end.year}-${end.month}-${end.day}",
                             style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              labelText: "End Time",
-                              labelStyle: TextStyle(color: Colors.white),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                            )),
+                          ),
+                          trailing: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.white,
+                          ),
+                          onTap: () async {
+                            DateTime time = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2050));
+                            if (time != null) {
+                              setState(() {
+                                end = time;
+                              });
+                            }
+                          },
+                        ),
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
                   TextField(
+                      //controller: TextEditingController(text: 'initial'),
                       onChanged: (val) {
                         description = val;
                       },
@@ -206,9 +228,14 @@ class CreateNewTaskPage extends StatelessWidget {
                   GestureDetector(
                     onTap: () async {
                       print('tapped');
-                      await DatabaseService(uid: uid,id:id)
-                          .updateTodo(title, start, end, description);
+                      await DatabaseService(uid: widget.uid, id: widget.id)
+                          .updateTodo(
+                              title,
+                              "${start.year}-${start.month}-${start.day}",
+                              "${end.year}-${end.month}-${end.day}",
+                              description);
                       print('sucess');
+                      Navigator.pop(context);
                     },
                     child: Container(
                       child: Text(

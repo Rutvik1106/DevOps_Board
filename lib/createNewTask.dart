@@ -163,10 +163,11 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                   GestureDetector(
                     onTap: () async {
                       int totaltask;
-                      SharedPreferences pref = await SharedPreferences.getInstance();
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
                       totaltask = pref.getInt('totaltask');
-                      if(totaltask == null)
-                      totaltask = 0;
+                      if (totaltask == null)
+                        totaltask = 0;
                       else {
                         print(totaltask);
                       }
@@ -176,6 +177,7 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       await DatabaseService(uid: widget.uid)
                           .updateTask(title, days, description);
                       print('sucess');
+                      Navigator.pop(context);
                     },
                     child: Container(
                       child: Text(
