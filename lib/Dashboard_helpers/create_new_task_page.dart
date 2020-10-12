@@ -1,12 +1,13 @@
 import 'package:DevOps_Board/Widgets/back_button.dart';
-import 'package:DevOps_Board/Widgets/my_text_field.dart';
 import 'package:DevOps_Board/Widgets/top_container.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
+import 'package:DevOps_Board/services/database.dart';
 import 'package:flutter/material.dart';
 
-
-class CreateNewTaskPage extends StatelessWidget {
-   static CircleAvatar calendarIcon() {
+class CreateNewTaskPage extends StatefulWidget {
+  String uid, id;
+  CreateNewTaskPage({this.uid, this.id});
+  static CircleAvatar calendarIcon() {
     return CircleAvatar(
       radius: 25.0,
       backgroundColor: ColorSys.Gray,
@@ -17,6 +18,21 @@ class CreateNewTaskPage extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  _CreateNewTaskPageState createState() => _CreateNewTaskPageState();
+}
+
+class _CreateNewTaskPageState extends State<CreateNewTaskPage> {
+  String title, description;
+  DateTime start, end;
+
+  @override
+  void initState() {
+    super.initState();
+    end = start = DateTime.now();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -44,7 +60,9 @@ class CreateNewTaskPage extends StatelessWidget {
                       Text(
                         'Create Work Iteam',
                         style: TextStyle(
-                            color:ColorSys.Gray,fontSize: 30.0, fontWeight: FontWeight.w700),
+                            color: ColorSys.Gray,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -53,26 +71,30 @@ class CreateNewTaskPage extends StatelessWidget {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      MyTextField(label: 'Title'),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Expanded(
-                            child: MyTextField(
-                              label: 'Date',
-                              icon: downwardIcon,
+                      TextField(
+                          onChanged: (val) {
+                            title = val;
+                          },
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            labelText: 'Title',
+                            labelStyle: TextStyle(color: Colors.black),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
                             ),
-                          ),
-                          calendarIcon(),
-                        ],
-                      )
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          )),
                     ],
                   ))
                 ],
               ),
             ),
-             SizedBox(height: 40),
+            SizedBox(height: 40),
             Expanded(
                 child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -82,25 +104,77 @@ class CreateNewTaskPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
-                          child: MyTextField(
-                        label: 'Start Time',
-                        icon: downwardIcon,
+                          child: ListTile(
+                        title: Text(
+                          "start ${start.year}-${start.month}-${start.day}",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        trailing: Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white,
+                        ),
+                        onTap: () async {
+                          DateTime time = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2050));
+                          if (time != null) {
+                            setState(() {
+                              start = time;
+                            });
+                          }
+                        },
                       )),
                       SizedBox(width: 40),
                       Expanded(
-                        child: MyTextField(
-                          label: 'End Time',
-                          icon: downwardIcon,
+                        child: ListTile(
+                          title: Text(
+                            "end ${end.year}-${end.month}-${end.day}",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          trailing: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.white,
+                          ),
+                          onTap: () async {
+                            DateTime time = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2050));
+                            if (time != null) {
+                              setState(() {
+                                end = time;
+                              });
+                            }
+                          },
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
-                  MyTextField(
-                    label: 'Description',
-                    minLines: 1,
-                    maxLines: 3,
-                  ),
+                  TextField(
+                      //controller: TextEditingController(text: 'initial'),
+                      onChanged: (val) {
+                        description = val;
+                      },
+                      style: TextStyle(color: Colors.white),
+                      minLines: 1,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        labelText: "Description",
+                        labelStyle: TextStyle(color: Colors.white),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      )),
                   SizedBox(height: 30),
                   Container(
                     alignment: Alignment.topLeft,
@@ -125,7 +199,6 @@ class CreateNewTaskPage extends StatelessWidget {
                           children: <Widget>[
                             Chip(
                               label: Text("Features"),
-
                               backgroundColor: ColorSys.kRed,
                               labelStyle: TextStyle(color: Colors.white),
                             ),
@@ -152,20 +225,33 @@ class CreateNewTaskPage extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(
-                    child: Text(
-                      'Create Work Iteam',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18),
-                    ),
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
-                    width: width - 40,
-                    decoration: BoxDecoration(
-                      color: ColorSys.Blue,
-                      borderRadius: BorderRadius.circular(30),
+                  GestureDetector(
+                    onTap: () async {
+                      print('tapped');
+                      await DatabaseService(uid: widget.uid, id: widget.id)
+                          .updateTodo(
+                              title,
+                              "${start.year}-${start.month}-${start.day}",
+                              "${end.year}-${end.month}-${end.day}",
+                              description);
+                      print('sucess');
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      child: Text(
+                        'Create Work Iteam',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18),
+                      ),
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                      width: width - 40,
+                      decoration: BoxDecoration(
+                        color: ColorSys.Blue,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                   ),
                 ],
