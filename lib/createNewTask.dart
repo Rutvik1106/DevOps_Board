@@ -1,12 +1,15 @@
-
 import 'package:DevOps_Board/Widgets/back_button.dart';
 import 'package:DevOps_Board/Widgets/my_text_field.dart';
 import 'package:DevOps_Board/Widgets/top_container.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
+import 'package:DevOps_Board/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateNewTask extends StatefulWidget {
-  CreateNewTask({Key key}) : super(key: key);
+  //CreateNewTask({Key key}) : super(key: key);
+  String uid;
+  CreateNewTask({this.uid});
 
   @override
   _CreateNewTaskState createState() => _CreateNewTaskState();
@@ -30,6 +33,7 @@ class _CreateNewTaskState extends State<CreateNewTask> {
 
   @override
   Widget build(BuildContext context) {
+    String title, description, days;
     double width = MediaQuery.of(context).size.width;
     var downwardIcon = Icon(
       Icons.keyboard_arrow_down,
@@ -55,7 +59,7 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       Text(
                         'Create New Project',
                         style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 30.0,
                             fontWeight: FontWeight.w700),
                       ),
@@ -66,16 +70,51 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      MyTextField(label: 'Title'),
+                      TextField(
+                          style: TextStyle(color: Colors.black),
+                          minLines: 1,
+                          onChanged: (val) {
+                            title = val;
+                          },
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            labelText: "title",
+                            labelStyle: TextStyle(color: Colors.black),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          )),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Expanded(
-                            child: MyTextField(
-                              label: 'Total Days',
-                              // icon: downwardIcon,
-                            ),
+                            child: TextField(
+                                style: TextStyle(color: Colors.black),
+                                minLines: 1,
+                                maxLines: 1,
+                                onChanged: (val) {
+                                  days = val;
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Days",
+                                  labelStyle: TextStyle(color: Colors.black),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.black),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.black),
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.black),
+                                  ),
+                                )),
                           ),
                         ],
                       )
@@ -91,11 +130,26 @@ class _CreateNewTaskState extends State<CreateNewTask> {
               child: Column(
                 children: <Widget>[
                   SizedBox(height: 20),
-                  MyTextField(
-                    label: 'Description',
-                    minLines: 1,
-                    maxLines: 3,
-                  ),
+                  TextField(
+                      onChanged: (val) {
+                        description = val;
+                      },
+                      style: TextStyle(color: Colors.white),
+                      minLines: 1,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        labelText: "Description",
+                        labelStyle: TextStyle(color: Colors.white),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      )),
                   SizedBox(height: 30),
                 ],
               ),
@@ -106,21 +160,41 @@ class _CreateNewTaskState extends State<CreateNewTask> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(
-                    child: Text(
-                      'Create New Project',
-                      style: TextStyle(
-                          color: Colors.white,
-                           fontFamily: 'Subway',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18),
-                    ),
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
-                    width: width - 40,
-                    decoration: BoxDecoration(
-                      color: ColorSys.Blue,
-                      borderRadius: BorderRadius.circular(30),
+                  GestureDetector(
+                    onTap: () async {
+                      int totaltask;
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      totaltask = pref.getInt('totaltask');
+                      if (totaltask == null)
+                        totaltask = 0;
+                      else {
+                        print(totaltask);
+                      }
+                      totaltask++;
+                      pref.setInt('totaltask', totaltask);
+                      print('tapped');
+                      await DatabaseService(uid: widget.uid)
+                          .updateTask(title, days, description);
+                      print('sucess');
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      child: Text(
+                        'Create New Project',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Subway',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18),
+                      ),
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                      width: width - 40,
+                      decoration: BoxDecoration(
+                        color: ColorSys.Blue,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                   ),
                 ],
