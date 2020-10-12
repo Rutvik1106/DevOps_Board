@@ -10,7 +10,9 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      
+      onChanged: (value) {
+        
+      },
       style: TextStyle(color: Colors.white),
       minLines: minLines,
       maxLines: maxLines,

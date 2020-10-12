@@ -72,7 +72,6 @@ class _NavigationBarState extends State<NavigationBar> {
                   onTabChange: (index) {
                     setState(() {
                       _selectedIndex = index;
-                      // screens.elementAt(_selectedIndex);
                     });
                   }),
             ),
