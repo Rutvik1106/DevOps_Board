@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
                       // shadowColor: ColorSys.secoundry,
                       color: Colors.purple[600],
                       elevation: 0.0,
-                      child: Center(
+        child: Center(
                         child: Text(
                           'LOGIN',
                           style: TextStyle(
