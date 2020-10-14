@@ -1,21 +1,29 @@
 import 'package:DevOps_Board/Widgets/back_button.dart';
-import 'package:DevOps_Board/Widgets/my_text_field.dart';
 import 'package:DevOps_Board/Widgets/top_container.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
 import 'package:DevOps_Board/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CreateNewTask extends StatefulWidget {
+class updateTask extends StatefulWidget {
   //CreateNewTask({Key key}) : super(key: key);
-  String uid;
-  CreateNewTask({this.uid});
+  String uid, id;
+  String title, days, description, date, totaldays, setstate;
+  updateTask(
+      {this.uid,
+      this.id,
+      this.setstate,
+      this.title,
+      this.date,
+      this.days,
+      this.description,
+      this.totaldays});
 
   @override
-  _CreateNewTaskState createState() => _CreateNewTaskState();
+  _updateTaskState createState() => _updateTaskState();
 }
 
-class _CreateNewTaskState extends State<CreateNewTask> {
+class _updateTaskState extends State<updateTask> {
   static CircleAvatar calendarIcon() {
     return CircleAvatar(
       radius: 25.0,
@@ -33,7 +41,7 @@ class _CreateNewTaskState extends State<CreateNewTask> {
 
   @override
   Widget build(BuildContext context) {
-    String title, description, days;
+    //String title, description, days;
     double width = MediaQuery.of(context).size.width;
     var downwardIcon = Icon(
       Icons.keyboard_arrow_down,
@@ -71,10 +79,11 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       TextField(
+                          controller: TextEditingController(text: widget.title),
                           style: TextStyle(color: Colors.black),
                           minLines: 1,
                           onChanged: (val) {
-                            title = val;
+                            widget.title = val;
                           },
                           maxLines: 1,
                           decoration: InputDecoration(
@@ -96,11 +105,13 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                         children: <Widget>[
                           Expanded(
                             child: TextField(
+                                controller:
+                                    TextEditingController(text: widget.days),
                                 style: TextStyle(color: Colors.black),
                                 minLines: 1,
                                 maxLines: 1,
                                 onChanged: (val) {
-                                  days = val;
+                                  widget.days = val;
                                 },
                                 decoration: InputDecoration(
                                   labelText: "Days",
@@ -131,8 +142,10 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                 children: <Widget>[
                   SizedBox(height: 20),
                   TextField(
+                      controller:
+                          TextEditingController(text: widget.description),
                       onChanged: (val) {
-                        description = val;
+                        widget.description = val;
                       },
                       style: TextStyle(color: Colors.white),
                       minLines: 1,
@@ -162,26 +175,16 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () async {
-                      int totaltask;
-                      SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-                      totaltask = pref.getInt('totaltask');
-                      if (totaltask == null)
-                        totaltask = 0;
-                      else {
-                        print(totaltask);
-                      }
-                      totaltask++;
-                      pref.setInt('totaltask', totaltask);
                       print('tapped');
-                      await DatabaseService(uid: widget.uid)
-                          .updateTask(title, days, description);
+                      await DatabaseService(uid: widget.uid, id: widget.id)
+                          .update(widget.title, widget.days, widget.description,
+                              widget.date, widget.totaldays, widget.setstate);
                       print('sucess');
                       //Navigator.pop(context);
                     },
                     child: Container(
                       child: Text(
-                        'Create New Project',
+                        'Update Project',
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Subway',

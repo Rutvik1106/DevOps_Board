@@ -57,7 +57,6 @@ class _SignUpState extends State<SignUp> {
                       borderSide: BorderSide(color: Colors.white),
                     ),
                     labelText: 'Name',
-                    
                     labelStyle: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
@@ -92,7 +91,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  //height: 20.0,
                 ),
                 TextField(
                   style: TextStyle(color: Colors.white),
@@ -124,10 +123,10 @@ class _SignUpState extends State<SignUp> {
                 GestureDetector(
                   onTap: () {
                     print("tapped");
-                        _auth.registerWithEmailAndPassword(email, password, name);
-                        Navigator.pop(context);
-                      },
-child: Container(
+                    _auth.registerWithEmailAndPassword(email, password, name);
+                    Navigator.pop(context);
+                  },
+                  child: Container(
                     height: 60.0,
                     child: Material(
                       borderRadius: BorderRadius.circular(35.0),
