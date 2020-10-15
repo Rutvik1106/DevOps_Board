@@ -1,7 +1,6 @@
 import 'package:DevOps_Board/Dashboard_helpers/task_list.dart';
 import 'package:DevOps_Board/Widgets/active_project_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -235,9 +234,14 @@ class _DashboardState extends State<Dashboard> {
                                                         task['totaldays']
                                                             .toString());
                                                     if (task['date'] !=
-                                                        DateTime.now()
-                                                            .toString()
-                                                            .substring(0, 10)) {
+                                                            DateTime.now()
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 10) &&
+                                                        task['setstate'].contains('yes')
+                                                            ) {
+                                                      print("dayssss" +
+                                                          days.toString());
                                                       Firestore.instance
                                                           .collection(
                                                               widget.uid)
@@ -284,7 +288,8 @@ class _DashboardState extends State<Dashboard> {
                                                           'date': DateTime.now()
                                                               .toString()
                                                               .substring(0, 10),
-                                                          'totaldays': days + 1,
+                                                          'totaldays':
+                                                              task['totaldays'],
                                                           'setstate': 'No'
                                                         });
                                                         updatecomplete();
@@ -302,6 +307,18 @@ class _DashboardState extends State<Dashboard> {
                                                                             uid:
                                                                                 widget.uid,
                                                                             id: task.documentID,
+                                                                            setstate:
+                                                                                task['setstate'],
+                                                                            date:
+                                                                                task['date'],
+                                                                            days:
+                                                                                task['days'].toString(),
+                                                                            description:
+                                                                                task['description'],
+                                                                            title:
+                                                                                task['title'],
+                                                                            totaldays:
+                                                                                task['totaldays'].toString(),
                                                                           )));
                                                         },
                                                         child:

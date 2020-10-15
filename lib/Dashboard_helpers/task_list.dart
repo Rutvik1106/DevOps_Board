@@ -3,14 +3,27 @@ import 'package:DevOps_Board/Dashboard_helpers/create_new_task_page.dart';
 import 'package:DevOps_Board/Dashboard_helpers/todo.dart';
 import 'package:DevOps_Board/Widgets/task_column.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
+import 'package:DevOps_Board/services/database.dart';
+import 'package:DevOps_Board/updatetask.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskList extends StatefulWidget {
   //TaskList({Key key}) : super(key: key);
   String uid;
   String id;
-  TaskList({this.uid, this.id});
+  String setstate;
+  String title, days, description, date, totaldays;
+  TaskList(
+      {this.uid,
+      this.id,
+      this.setstate,
+      this.title,
+      this.date,
+      this.days,
+      this.description,
+      this.totaldays});
   @override
   _TaskListState createState() => _TaskListState();
 }
@@ -92,6 +105,57 @@ class _TaskListState extends State<TaskList> {
                             );
                           },
                           child: calendarIcon(),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => updateTask(
+                                          uid: widget.uid,
+                                          id: widget.id,
+                                          title: widget.title,
+                                          days: widget.days,
+                                          description: widget.description,
+                                          totaldays: widget.totaldays,
+                                          setstate: widget.setstate,
+                                          date: widget.date,
+                                        )));
+                          },
+                          child: CircleAvatar(
+                            radius: 25.0,
+                            backgroundColor: ColorSys.Blue,
+                            child: Icon(
+                              Icons.edit,
+                              size: 20.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            await DatabaseService(
+                                    uid: widget.uid, id: widget.id)
+                                .deleteTask();
+                            SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            pref.setInt(
+                                'totaltask', pref.getInt('totaltask') - 1);
+                            if (widget.setstate == 'No') {
+                              pref.setInt(
+                                  'complete', pref.getInt('complete') - 1);
+                            }
+                            Navigator.pop(context);
+                          },
+                          child: CircleAvatar(
+                            radius: 25.0,
+                            backgroundColor: ColorSys.Blue,
+                            child: Icon(
+                              Icons.delete,
+                              size: 20.0,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ],
                     ),
