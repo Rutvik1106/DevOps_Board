@@ -177,7 +177,6 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       await DatabaseService(uid: widget.uid)
                           .updateTask(title, days, description);
                       print('sucess');
-                      //Navigator.pop(context);
                     },
                     child: Container(
                       child: Text(
