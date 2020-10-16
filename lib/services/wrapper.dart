@@ -13,6 +13,6 @@ class Wrapper extends StatelessWidget {
     if(user == null)
     return OnBoarding();
     else
-    return NavigationBar();
+    return NavigationBar(uid: user.uid);
   }
 }

@@ -1,22 +1,18 @@
-import 'package:DevOps_Board/Dashboard_helpers/dates_list.dart';
-import 'package:DevOps_Board/Widgets/back_button.dart';
-import 'package:DevOps_Board/Widgets/calendar_dates.dart';
-import 'package:DevOps_Board/Widgets/task_container.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'create_new_task_page.dart';
-
-
 
 class CalendarPage extends StatelessWidget {
+  String uid, id;
+  CalendarPage({this.uid, this.id});
   Widget _dashedText() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15),
       child: Text(
         '------------------------------------------',
         maxLines: 1,
-        style:
-            TextStyle(fontSize: 20.0, color: Colors.grey[400], letterSpacing: 5),
+        style: TextStyle(
+            fontSize: 20.0, color: Colors.grey[400], letterSpacing: 5),
       ),
     );
   }
@@ -24,171 +20,83 @@ class CalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorSys.Gray,
+        title: Text("Today's Task"),
+        centerTitle: true,
+      ),
       backgroundColor: ColorSys.Gray,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            20,
-            20,
-            20,
-            0,
-          ),
-          child: Column(
-            children: <Widget>[
-              MyBackButton(),
-              SizedBox(height: 30.0),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Today',
-                      style: TextStyle(
-                        color: Colors.white,
-                          fontSize: 30.0, fontWeight: FontWeight.w700),
-                    ),
-                    Container(
-                      height: 40.0,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        color: ColorSys.Blue,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CreateNewTaskPage(),
-                            ),
-                          );
-                        },
-                        child: Center(
-                          child: Text(
-                            'Add task',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Productive Day, Sourav',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'April, 2020',
-                  style: TextStyle(
-                    color: Colors.white,fontWeight: FontWeight.w500, fontSize: 20),
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Container(
-                height: 58.0,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: days.length,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+        child: StreamBuilder(
+            stream: Firestore.instance
+                .collection(uid)
+                .document(id)
+                .collection('list')
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data.documents.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CalendarDates(
-                      day: days[index],
-                      date: dates[index],
-                      dayColor: index == 0 ? ColorSys.kRed : Colors.white,
-                      dateColor:
-                          index == 0 ? ColorSys.kRed : Colors.grey,
-                    );
+                    DocumentSnapshot task = snapshot.data.documents[index];
+                    print('TIIIIITLEEE' + task['title']);
+                    if (task['start'] ==
+                            DateTime.now().toString().substring(0, 10) ||
+                        task['show'] == 'yes' ||
+                        task['end'] ==
+                            DateTime.now().toString().substring(0, 10)) {
+                      if (task['start'] ==
+                          DateTime.now().toString().substring(0, 10)) {
+                        print('object');
+                        CollectionReference taskCollection = Firestore.instance
+                            .collection(uid)
+                            .document(id)
+                            .collection('list');
+                        taskCollection.document(task.documentID).setData({
+                          'title': task['title'],
+                          'start': task['start'],
+                          'end': task['end'],
+                          'description': task['description'],
+                          'show': 'yes',
+                          'done': 'no'
+                        });
+                      }
+                      if (task['end'] ==
+                          DateTime.now().toString().substring(0, 10)) {
+                        CollectionReference taskCollection = Firestore.instance
+                            .collection(uid)
+                            .document(id)
+                            .collection('list');
+                        taskCollection.document(task.documentID).setData({
+                          'title': task['title'],
+                          'start': task['start'],
+                          'end': task['end'],
+                          'description': task['description'],
+                          'show': 'no',
+                          'done': 'yes'
+                        });
+                      }
+                      return Card(
+                        color: Colors.grey[850],
+                        child: ListTile(
+                          title: Text(
+                            task['title'],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          subtitle: Text(
+                            task['description'],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      );
+                    }
                   },
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: ListView.builder(
-                            itemCount: time.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (BuildContext context, int index) =>
-                                Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  '${time[index]} ${time[index] > 8 ? 'PM' : 'AM'}',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          flex: 5,
-                          child: ListView(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            children: <Widget>[
-                              _dashedText(),
-                              TaskContainer(
-                                title: 'Project Research',
-                                subtitle:
-                                    'Discuss with the colleagues about the future plan',
-                                boxColor: ColorSys.Blue,
-                              ),
-                              _dashedText(),
-                              TaskContainer(
-                                title: 'Work on Medical App',
-                                subtitle: 'Add medicine tab',
-                                boxColor: ColorSys.Blue,
-                              ),
-                              TaskContainer(
-                                title: 'Call',
-                                subtitle: 'Call to david',
-                                boxColor: ColorSys.Blue,
-                              ),
-                              TaskContainer(
-                                title: 'Design Meeting',
-                                subtitle:
-                                    'Discuss with designers for new task for the medical app',
-                                boxColor: ColorSys.Blue,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+                );
+              }
+            }),
       ),
     );
   }

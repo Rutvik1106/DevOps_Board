@@ -1,4 +1,5 @@
 import 'package:DevOps_Board/dashboard.dart';
+import 'package:DevOps_Board/services/GoogleAuth.dart';
 import 'package:DevOps_Board/services/auth.dart';
 import 'package:DevOps_Board/signUp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +14,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String email,password;
+  String email, password;
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -56,14 +57,11 @@ class _LoginState extends State<Login> {
             child: Column(
               children: <Widget>[
                 TextField(
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     email = val;
                   },
                   decoration: InputDecoration(
-                    
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
@@ -85,9 +83,7 @@ class _LoginState extends State<Login> {
                   height: 20.0,
                 ),
                 TextField(
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     password = val;
                   },
@@ -113,18 +109,18 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 50.0,
                 ),
-                Container(
-                  height: 60.0,
-                  child: Material(
-                    borderRadius: BorderRadius.circular(35.0),
-                    // shadowColor: ColorSys.secoundry,
-                    color: Colors.purple[600],
-                    elevation: 0.0,
-                    child: GestureDetector(
-                      onTap: () async {
-                        await _auth.signInWithEmailAndPassword(email, password);
-                       Navigator.pop(context);
-                      },
+                GestureDetector(
+                  onTap: () async {
+                    await _auth.signInWithEmailAndPassword(email, password);
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 60.0,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(35.0),
+                      // shadowColor: ColorSys.secoundry,
+                      color: Colors.purple[600],
+                      elevation: 0.0,
                       child: Center(
                         child: Text(
                           'LOGIN',
@@ -140,37 +136,43 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 20.0,
                 ),
-                    Container(
+                Container(
                   height: 60.0,
                   color: Colors.transparent,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.white,
-                          style: BorderStyle.solid,
-                          width: 1.0),
-                      // color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(35.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                          child:
-                              ImageIcon(AssetImage('assets/icons/google.png')),
-                        ),
-                        SizedBox(width: 10.0),
-                        Center(
-                          child: Text(
-                            'Login With Google',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Montserrat',
+                  child: GestureDetector(
+                    onTap: () {
+                      googleSignIn();
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.white,
+                            style: BorderStyle.solid,
+                            width: 1.0),
+                        // color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(35.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Center(
+                            child: ImageIcon(
+                                AssetImage('assets/icons/google.png')),
+                          ),
+                          SizedBox(width: 10.0),
+                          Center(
+                            child: Text(
+                              'Login With Google',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

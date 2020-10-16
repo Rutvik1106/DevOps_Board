@@ -10,7 +10,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String email,password;
+  String email, password, name;
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -42,9 +42,33 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               children: <Widget>[
                 TextField(
-                  style: TextStyle(
-                    color: Colors.white
+                  style: TextStyle(color: Colors.white),
+                  onChanged: (val) {
+                    name = val;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[500]),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    labelText: 'Name',
+                    labelStyle: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.bold,
+                      color: ColorSys.gray,
+                    ),
                   ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextField(
+                  style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     email = val;
                   },
@@ -67,12 +91,10 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  //height: 20.0,
                 ),
                 TextField(
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
+                  style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     password = val;
                   },
@@ -98,6 +120,7 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: 50.0,
                 ),
+
                 Container(
                   height: 60.0,
                   child: Material(
@@ -113,6 +136,21 @@ class _SignUpState extends State<SignUp> {
 
                          Navigator.pop(context);
                       },
+
+                GestureDetector(
+                  onTap: () {
+                    print("tapped");
+                    _auth.registerWithEmailAndPassword(email, password, name);
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 60.0,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(35.0),
+                      shadowColor: ColorSys.secoundry,
+                      color: Colors.purple[600],
+                      elevation: 7.0,
+
                       child: Center(
                         child: Text(
                           'Sign Up',
