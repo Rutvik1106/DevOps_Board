@@ -1,4 +1,3 @@
-import 'package:DevOps_Board/onBoarding.dart';
 import 'package:DevOps_Board/services/auth.dart';
 import 'package:DevOps_Board/services/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,18 +8,7 @@ import 'package:provider/provider.dart';
 import 'onBoarding.dart';
 //import 'onBoarding.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      //scaffoldBackgroundColor: Colors.white,
-      //backgroundColor: Colors.white,
-      appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-    ),
-    home: OnBoarding(),
-  ));
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -28,6 +16,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<FirebaseUser>.value(
       value: AuthService().user,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Wrapper(),
       ),
     );
