@@ -42,6 +42,9 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
                   onChanged: (val) {
                     email = val;
                   },
@@ -67,6 +70,9 @@ class _SignUpState extends State<SignUp> {
                   height: 20.0,
                 ),
                 TextField(
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
                   onChanged: (val) {
                     password = val;
                   },
@@ -102,7 +108,10 @@ class _SignUpState extends State<SignUp> {
                     child: GestureDetector(
                       onTap: () {
                         _auth.registerWithEmailAndPassword(email, password);
-                        Navigator.pop(context);
+
+                    
+
+                         Navigator.pop(context);
                       },
                       child: Center(
                         child: Text(
