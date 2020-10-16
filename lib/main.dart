@@ -8,7 +8,12 @@ import 'package:provider/provider.dart';
 import 'onBoarding.dart';
 //import 'onBoarding.dart';
 
+
+
+
+
 void main() => runApp(MyApp());
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -22,3 +27,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

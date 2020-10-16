@@ -120,6 +120,23 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: 50.0,
                 ),
+
+                Container(
+                  height: 60.0,
+                  child: Material(
+                    borderRadius: BorderRadius.circular(35.0),
+                    shadowColor: ColorSys.secoundry,
+                    color: Colors.purple[600],
+                    elevation: 7.0,
+                    child: GestureDetector(
+                      onTap: () {
+                        _auth.registerWithEmailAndPassword(email, password);
+
+                    
+
+                         Navigator.pop(context);
+                      },
+
                 GestureDetector(
                   onTap: () {
                     print("tapped");
@@ -133,6 +150,7 @@ class _SignUpState extends State<SignUp> {
                       shadowColor: ColorSys.secoundry,
                       color: Colors.purple[600],
                       elevation: 7.0,
+
                       child: Center(
                         child: Text(
                           'Sign Up',
