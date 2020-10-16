@@ -37,6 +37,7 @@ dependencies:
   line_icons: ^0.2.0
   datetime_picker_formfield: ^1.0.0
   shared_preferences: ^0.5.12
+  google_sign_in: ^4.4.4
 
 dev_dependencies:
   flutter_test:

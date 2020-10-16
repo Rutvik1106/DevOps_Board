@@ -1,4 +1,5 @@
 import 'package:DevOps_Board/dashboard.dart';
+import 'package:DevOps_Board/services/GoogleAuth.dart';
 import 'package:DevOps_Board/services/auth.dart';
 import 'package:DevOps_Board/signUp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -138,34 +139,40 @@ class _LoginState extends State<Login> {
                 Container(
                   height: 60.0,
                   color: Colors.transparent,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.white,
-                          style: BorderStyle.solid,
-                          width: 1.0),
-                      // color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(35.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                          child:
-                              ImageIcon(AssetImage('assets/icons/google.png')),
-                        ),
-                        SizedBox(width: 10.0),
-                        Center(
-                          child: Text(
-                            'Login With Google',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Montserrat',
+                  child: GestureDetector(
+                    onTap: () {
+                      googleSignIn();
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.white,
+                            style: BorderStyle.solid,
+                            width: 1.0),
+                        // color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(35.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Center(
+                            child: ImageIcon(
+                                AssetImage('assets/icons/google.png')),
+                          ),
+                          SizedBox(width: 10.0),
+                          Center(
+                            child: Text(
+                              'Login With Google',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

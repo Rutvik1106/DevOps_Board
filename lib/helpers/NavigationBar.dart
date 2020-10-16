@@ -29,6 +29,7 @@ class _NavigationBarState extends State<NavigationBar> {
       UserProfile(uid: widget.uid,),
     ];
     return Scaffold(
+
       // body: PageStorage(
       // bucket: bucket,
       body: Center(

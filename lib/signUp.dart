@@ -91,7 +91,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  //height: 20.0,
                 ),
                 TextField(
                   style: TextStyle(color: Colors.white),
