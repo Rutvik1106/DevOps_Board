@@ -178,11 +178,6 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       await DatabaseService(uid: widget.uid)
                           .updateTask(title, days, description);
                       print('sucess');
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) {
-                      //     return Dashboard();
-                      //   },
-                      // ));
                     },
                     child: Container(
                       child: Text(

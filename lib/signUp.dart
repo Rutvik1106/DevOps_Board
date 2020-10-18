@@ -12,6 +12,12 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String email, password, name;
   AuthService _auth = AuthService();
+  bool _obsecure = true;
+  TextEditingController etName = new TextEditingController();
+  TextEditingController etEmail = new TextEditingController();
+  TextEditingController etPassword = new TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -20,31 +26,41 @@ class _SignUpState extends State<SignUp> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                  child: Text(
-                    'Signup',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 80.0,
-                      fontWeight: FontWeight.bold,
+          Form(
+            key: _formKey,
+            child: Container(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+                    child: Text(
+                      'Signup',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 80.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Container(
             padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
             child: Column(
               children: <Widget>[
-                TextField(
+                TextFormField(
+                  controller: etName,
+                  keyboardType: TextInputType.emailAddress,
                   style: TextStyle(color: Colors.white),
                   onChanged: (val) {
                     name = val;
+                  },
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Enter Name';
+                    }
                   },
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -67,10 +83,18 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: 20.0,
                 ),
-                TextField(
+                TextFormField(
+                  controller: etEmail,
+                  keyboardType: TextInputType.emailAddress,
                   style: TextStyle(color: Colors.white),
-                  onChanged: (val) {
-                    email = val;
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Enter Email Adderss';
+                    } else {
+                      setState(() {
+                        email = etEmail.text;
+                      });
+                    }
                   },
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -91,14 +115,23 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 SizedBox(
-                  //height: 20.0,
+                  height: 20.0,
                 ),
-                TextField(
+                TextFormField(
+                  controller: etPassword,
                   style: TextStyle(color: Colors.white),
-                  onChanged: (val) {
-                    password = val;
-                  },
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        Icons.visibility,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obsecure = !_obsecure;
+                        });
+                      },
+                    ),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
@@ -115,16 +148,27 @@ class _SignUpState extends State<SignUp> {
                       color: ColorSys.gray,
                     ),
                   ),
-                  obscureText: true,
+                  obscureText: _obsecure,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Enter Password';
+                    } else if (value.length < 6) {
+                      return 'Password must be more than 6 character';
+                    } else {
+                      password = etPassword.text;
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 50.0,
                 ),
                 GestureDetector(
                   onTap: () {
-                    print("tapped");
-                    _auth.registerWithEmailAndPassword(email, password, name);
-                    Navigator.pop(context);
+                    if (_formKey.currentState.validate()) {
+                      print("tapped");
+                      _auth.registerWithEmailAndPassword(email, password, name);
+                      Navigator.pop(context);
+                    }
                   },
                   child: Container(
                     height: 60.0,
