@@ -139,7 +139,7 @@ class _DashboardState extends State<Dashboard> {
                                         percent: per,
                                         circularStrokeCap:
                                             CircularStrokeCap.round,
-                                        progressColor: Colors.black,
+                                        progressColor: Colors.white,
                                         backgroundColor: Colors.white,
                                         center: CircleAvatar(
                                           backgroundColor: Colors.white,

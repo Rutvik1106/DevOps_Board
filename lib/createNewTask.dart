@@ -1,6 +1,7 @@
 import 'package:DevOps_Board/Widgets/back_button.dart';
 import 'package:DevOps_Board/Widgets/my_text_field.dart';
 import 'package:DevOps_Board/Widgets/top_container.dart';
+import 'package:DevOps_Board/dashboard.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
 import 'package:DevOps_Board/services/database.dart';
 import 'package:flutter/material.dart';
@@ -177,7 +178,6 @@ class _CreateNewTaskState extends State<CreateNewTask> {
                       await DatabaseService(uid: widget.uid)
                           .updateTask(title, days, description);
                       print('sucess');
-
                     },
                     child: Container(
                       child: Text(
