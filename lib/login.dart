@@ -119,7 +119,8 @@ class _LoginState extends State<Login> {
                     child: Material(
                       borderRadius: BorderRadius.circular(35.0),
                       // shadowColor: ColorSys.secoundry,
-                      color: Colors.purple[600],
+                      //color: Colors.purple[600],
+                      color: ColorSys.Blue,
                       elevation: 0.0,
                       child: Center(
                         child: Text(
@@ -202,7 +203,7 @@ class _LoginState extends State<Login> {
                 child: Text(
                   'Register',
                   style: TextStyle(
-                    color: Colors.purple[600],
+                    color: ColorSys.Blue,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,

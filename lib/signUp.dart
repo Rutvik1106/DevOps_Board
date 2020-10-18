@@ -130,8 +130,8 @@ class _SignUpState extends State<SignUp> {
                     height: 60.0,
                     child: Material(
                       borderRadius: BorderRadius.circular(35.0),
-                      shadowColor: ColorSys.secoundry,
-                      color: Colors.purple[600],
+                      //shadowColor: ColorSys.secoundry,
+                      color: ColorSys.Blue,
                       elevation: 7.0,
                       child: Center(
                         child: Text(

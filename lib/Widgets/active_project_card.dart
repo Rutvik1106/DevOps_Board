@@ -1,3 +1,4 @@
+import 'package:DevOps_Board/helpers/ColorSys.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -40,7 +41,7 @@ class ActiveProjectsCard extends StatelessWidget {
                 lineWidth: 5.0,
                 circularStrokeCap: CircularStrokeCap.round,
                 backgroundColor: Colors.white10,
-                progressColor: Colors.white,
+                progressColor: ColorSys.Blue,
                 center: Text(
                   '${(loadingPercent*100).round()}%',
                   style: TextStyle(
