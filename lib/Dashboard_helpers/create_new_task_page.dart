@@ -176,46 +176,46 @@ class _CreateNewTaskPageState extends State<CreateNewTaskPage> {
                         ),
                       )),
                   SizedBox(height: 30),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Category',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          //direction: Axis.vertical,
-                          alignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          runSpacing: 0,
-                          //textDirection: TextDirection.rtl,
-                          spacing: 20.0,
-                          children: <Widget>[
-                            Chip(
-                              label: Text("Features"),
-                              backgroundColor: ColorSys.kRed,
-                              labelStyle: TextStyle(color: Colors.white),
-                            ),
-                            Chip(
-                              label: Text("User Story"),
-                            ),
-                            Chip(
-                              label: Text("Task"),
-                            ),
-                            Chip(
-                              label: Text("Bug"),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
+                  // Container(
+                  //   alignment: Alignment.topLeft,
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: <Widget>[
+                  //       Text(
+                  //         'Category',
+                  //         style: TextStyle(
+                  //           fontSize: 18,
+                  //           color: Colors.white,
+                  //         ),
+                  //       ),
+                  //       Wrap(
+                  //         crossAxisAlignment: WrapCrossAlignment.start,
+                  //         //direction: Axis.vertical,
+                  //         alignment: WrapAlignment.start,
+                  //         verticalDirection: VerticalDirection.down,
+                  //         runSpacing: 0,
+                  //         //textDirection: TextDirection.rtl,
+                  //         spacing: 20.0,
+                  //         children: <Widget>[
+                  //           Chip(
+                  //             label: Text("Features"),
+                  //             backgroundColor: ColorSys.kRed,
+                  //             labelStyle: TextStyle(color: Colors.white),
+                  //           ),
+                  //           Chip(
+                  //             label: Text("User Story"),
+                  //           ),
+                  //           Chip(
+                  //             label: Text("Task"),
+                  //           ),
+                  //           Chip(
+                  //             label: Text("Bug"),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             )),

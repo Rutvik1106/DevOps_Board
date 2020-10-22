@@ -83,7 +83,7 @@ class _LoginState extends State<Login> {
                         borderSide: BorderSide(color: Colors.white),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.purple[500]),
+                        borderSide: BorderSide(color: ColorSys.Blue),
                       ),
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
@@ -112,32 +112,32 @@ class _LoginState extends State<Login> {
                           Icons.visibility,
                           color: Colors.white,
 
-                  obscureText: true,
+                  //obscureText: true,
                 ),
-                SizedBox(
-                  height: 50.0,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    await _auth.signInWithEmailAndPassword(email, password);
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 60.0,
-                    child: Material(
-                      borderRadius: BorderRadius.circular(35.0),
-                      // shadowColor: ColorSys.secoundry,
-                      //color: Colors.purple[600],
-                      color: ColorSys.Blue,
-                      elevation: 0.0,
-                      child: Center(
-                        child: Text(
-                          'LOGIN',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat'),
-                        ),
+                // SizedBox(
+                //   height: 50.0,
+                // ),
+                // GestureDetector(
+                //   onTap: () async {
+                //     await _auth.signInWithEmailAndPassword(email, password);
+                //     Navigator.pop(context);
+                //   },
+                  // child: Container(
+                  //   height: 60.0,
+                  //   child: Material(
+                  //     borderRadius: BorderRadius.circular(35.0),
+                  //     // shadowColor: ColorSys.secoundry,
+                  //     //color: Colors.purple[600],
+                  //     color: ColorSys.Blue,
+                  //     elevation: 0.0,
+                  //     child: Center(
+                  //       child: Text(
+                  //         'LOGIN',
+                  //         style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontWeight: FontWeight.bold,
+                  //             fontFamily: 'Montserrat'),
+                  //       ),
                         onPressed: () {
                           setState(() {
                             _obsecure = !_obsecure;
@@ -148,7 +148,7 @@ class _LoginState extends State<Login> {
                         borderSide: BorderSide(color: Colors.white),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.purple[500]),
+                        borderSide: BorderSide(color: ColorSys.Blue),
                       ),
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
@@ -184,7 +184,7 @@ class _LoginState extends State<Login> {
                       child: Material(
                         borderRadius: BorderRadius.circular(35.0),
                         // shadowColor: ColorSys.secoundry,
-                        color: Colors.purple[600],
+                        color: ColorSys.Blue,
                         elevation: 0.0,
                         child: Center(
                           child: Text(

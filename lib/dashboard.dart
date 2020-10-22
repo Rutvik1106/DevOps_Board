@@ -140,7 +140,7 @@ class _DashboardState extends State<Dashboard> {
                                         circularStrokeCap:
                                             CircularStrokeCap.round,
                                         progressColor: Colors.white,
-                                        backgroundColor: Colors.white,
+                                        backgroundColor: ColorSys.Blue,
                                         center: CircleAvatar(
                                           backgroundColor: Colors.white,
                                           radius: 35.0,

@@ -1,5 +1,6 @@
 import 'package:DevOps_Board/Dashboard_helpers/create_new_task_page.dart';
 import 'package:DevOps_Board/Dashboard_helpers/task_list.dart';
+import 'package:DevOps_Board/DevelopersPage.dart';
 import 'package:DevOps_Board/createNewTask.dart';
 import 'package:DevOps_Board/dashboard.dart';
 import 'package:DevOps_Board/helpers/ColorSys.dart';
@@ -27,6 +28,7 @@ class _NavigationBarState extends State<NavigationBar> {
       Dashboard(uid: widget.uid),
       CreateNewTask(uid:widget.uid),
       UserProfile(uid: widget.uid,),
+      DevelopersPage(),
     ];
     return Scaffold(
 
@@ -68,6 +70,11 @@ class _NavigationBarState extends State<NavigationBar> {
                   GButton(
                     icon: LineIcons.user,
                     text: 'Profile',
+                    iconColor: Colors.white,
+                  ),
+                   GButton(
+                    icon: LineIcons.info_circle,
+                    text: 'Developers',
                     iconColor: Colors.white,
                   ),
                 ],
