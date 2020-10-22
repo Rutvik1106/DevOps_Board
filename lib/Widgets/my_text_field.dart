@@ -10,19 +10,26 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      
-      style: TextStyle(color: Colors.black87),
+      onChanged: (value) {
+        
+      },
+      style: TextStyle(color: Colors.white),
       minLines: minLines,
       maxLines: maxLines,
       decoration: InputDecoration(
         suffixIcon: icon == null ? null: icon,
           labelText: label,
-          labelStyle: TextStyle(color: Colors.black45),
+          labelStyle: TextStyle(color: Colors.white),
           
-          focusedBorder:
-              UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-          border:
-              UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
-    );
+          enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+    ));
   }
 }

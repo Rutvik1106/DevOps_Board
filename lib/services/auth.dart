@@ -1,3 +1,4 @@
+import 'package:DevOps_Board/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -8,6 +9,7 @@ class AuthService {
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      // ignore: deprecated_member_use
       FirebaseUser user = result.user;
       return user;
     } catch(e) {
@@ -15,10 +17,11 @@ class AuthService {
     }
   }
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String email, String password,String name) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+      await DatabaseService(uid: user.uid).updateUserData(name, email);
       return user;
     } catch(e) {
       print(e);
